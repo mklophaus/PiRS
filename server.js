@@ -65,7 +65,7 @@ app.get('/auth/spotify/callback',
     // Successful authentication, redirect home.
     res.redirect('/');
 });
-
+require('./config/passport')(passport);
 // Routing layers: favicon, static assets, dynamic routes, or 404…
 
 // Middleware for SASS
@@ -85,6 +85,8 @@ app.use(debugReq);
 
 // Defines all of our "dynamic" routes.
 app.use('/', routes);
+require('./routes/index')(app, passport)
+
 
 // Catches all 404 routes.
 app.use(function(req, res, next) {
