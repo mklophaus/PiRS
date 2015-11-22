@@ -66,6 +66,10 @@ app.get('/auth/spotify/callback',
     res.redirect('/');
 });
 require('./config/passport')(passport);
+
+var endpoint = 'https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb';
+
+var clientIdParam = "client_id" + process.env.CLIENT_ID
 // Routing layers: favicon, static assets, dynamic routes, or 404…
 
 // Middleware for SASS
@@ -85,7 +89,8 @@ app.use(debugReq);
 
 // Defines all of our "dynamic" routes.
 app.use('/', routes);
-require('./routes/index')(app, passport)
+
+require('./config/routes', router)(app, passport)
 
 
 // Catches all 404 routes.
@@ -112,5 +117,5 @@ function debugReq(req, res, next) {
   debug('body:',   req.body);
   next();
 }
-
+app.listen(8000);
 module.exports = app;
