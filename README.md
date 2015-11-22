@@ -10,5 +10,4 @@ To run the app you will need to:
     * express-session
     * passport
     * passport-spotify
-    * querystring
 * Create a .env with the client_id and client_secret
