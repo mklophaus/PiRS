@@ -90,7 +90,7 @@ app.use(debugReq);
 // Defines all of our "dynamic" routes.
 app.use('/', routes);
 
-require('./config/routes', router)(app, passport)
+require('./routes/index')(app, passport)
 
 
 // Catches all 404 routes.
