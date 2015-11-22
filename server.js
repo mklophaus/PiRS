@@ -41,7 +41,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cookieParser('notsosecretnowareyou'));
+app.use(cookieParser());
+app.use(session({
+  secret: 'Aux Hog',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // Routing layers: favicon, static assets, dynamic routes, or 404…
 
