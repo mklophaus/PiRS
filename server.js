@@ -18,6 +18,11 @@ var env      = require('./config/environment'),
 // Instantiate a server application.
 var app = express();
 
+
+var router = express.Router();
+require('dotenv').load();
+
+
 // Configure the application (and set it's title!).
 app.set('title', env.TITLE);
 app.set('safe-title', env.SAFE_TITLE);
