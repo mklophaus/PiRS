@@ -1,5 +1,5 @@
 var index = function(req, res, next) {
-  res.render('welcome/index');
+  res.render('./index');
 };
 
 module.exports = {
