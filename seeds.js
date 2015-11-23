@@ -3,13 +3,11 @@ var mongoose = require('./config/database');
 var User = require('./models/user');
 
 var users = [
-  { // 0
-    handle: "DunkLord",
-    name:   "Bob Neverdunk"
-  },
-  { // 1
-    handle: "MoneyMarge",
-    name:   "Margaret Kalanchoe"
+  {
+  display_name: "Ben Benjamin",
+  spotifyId: "beineken",
+  profile_image: "https://scontent.xx.fbcdn.net/hprofile-xap1/v/t1.0-1/p200x200/1012989_10153159557102664_6156379247819893088_n.jpg?oh=e4442eb297ef7cb5561f945edcb9ec53&oe=56E3E40E",
+  // email: String,
   }
 ];
 
