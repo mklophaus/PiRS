@@ -12,13 +12,11 @@ module.exports = function(passport) {
     });
   }
 ));
-passport.serializeUser(function(student, done) {
-      done(null, student.id);
-  });
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
 
-passport.deserializeUser(function(id, done) {
-  Student.findById(id, function(err, student) {
-    done(err, student);
-  });
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
 });
 }
