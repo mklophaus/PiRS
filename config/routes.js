@@ -10,6 +10,6 @@ router.get('/', welcomeController.index);
 
 // users resource paths:
 router.get('/users',     usersController.index);
-router.get('/users/:id', usersController.show);
+router.get('/users/:spotifyId', usersController.show);
 
 module.exports = router;
