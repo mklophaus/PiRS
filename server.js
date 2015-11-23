@@ -63,7 +63,7 @@ app.get('/callback',
   passport.authenticate('spotify', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.redirect('/circles');
 });
 require('./config/passport')(passport);
 
