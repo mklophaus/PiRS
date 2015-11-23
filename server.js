@@ -59,7 +59,7 @@ app.get('/auth/spotify',
    // function will not be called.
 });
 
-app.get('/auth/spotify/callback',
+app.get('/callback',
   passport.authenticate('spotify', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
