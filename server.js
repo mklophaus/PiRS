@@ -92,6 +92,24 @@ app.use('/', routes);
 
 require('./routes/index')(app, passport)
 
+var usersRoute = router.route('/users');
+
+// Create endpoint /api/users for POSTS
+usersRoute.post(function(req, res) {
+  // Create a new instance of the User model
+  var user = new User();
+
+  user.name = req.body.name;
+  user.type = req.body.type;
+
+  // Save the user and check for errors
+  user.save(function(err) {
+    if (err)
+      res.send(err);
+
+    res.json({ message: 'User added', data: user });
+  });
+});
 
 // Catches all 404 routes.
 app.use(function(req, res, next) {
