@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>pi.fm</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,300,900' rel='stylesheet' type='text/css'>
+
+  <style>
+
+    html {
+      height: 100%;
+      font-size: 100%;
+    }
+
+    body {
+      min-height: 100%;
+      overflow: hidden;
+      font-family: 'Roboto', sans-serif;
+      color: #181818;
+    }
+
+    main {
+      width: 90vw;
+      height: 50vw;
+      border: 1px solid black;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background-color: #fff;
+      box-shadow: 4px 8px 6px -6px #D8D8D8;
+    }
+
+    .slide {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 900;
+      font-size: 4vw;
+      margin: 0px 0px 4% 0px;
+      padding: 10px 0px;
+      border-bottom: 1px solid black;
+      box-shadow: 0px 8px 6px -6px #D8D8D8;
+    }
+
+    #mainCircle {
+      position: absolute;
+      border: 1px solid black;
+      border-radius: 50%;
+      height: 38vw;
+      width: 38vw;
+      margin: 50% 0 0 50%;
+      transform: translate(-50%, -100%)
+    }
+
+    #mainCircleText {
+      width: 100%;
+      text-align: center;
+      margin-top: 50%;
+      transform: translate(0, -50%);
+      font-size: 3vw;
+    }
+
+    .userCircle {
+      height: 12vw;
+      width: 12vw;
+      border: 1px solid black;
+      border-radius: 50%;
+      position: absolute;
+      background: #fff;
+      text-align: center;
+      font-size: 4vw;
+      line-height: 100%
+    }
+
+    .userCircle p {
+      text-align: center;
+      width: 100%;
+      color: white;
+    }
+
+    #user1 {
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #26AF93;
+    }
+    #user2 {
+      bottom: 0%;
+      background-color: #26DAB0;
+    }
+    #user3 {
+      right: 0%;
+      bottom: 0%;
+      background-color: #266B5B;
+    }
+
+    #framesContainer {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .framesColumn {
+      width: 40%;
+      height: 80%;
+      text-align: center;
+      display: inline-block;
+    }
+
+    #screenshot {
+      width: 55%;
+    }
+
+    #demoText {
+      text-align: left;
+      word-wrap: break-word;
+      border: none;
+      box-shadow: none;
+    }
+
+    #techsContainer {
+      display: flex;
+      height: 80%;
+      justify-content: space-around;
+    }
+
+    .techColumn {
+      height: 100%;
+      width: 20%;
+      text-align: center;
+      white-space: nowrap;
+      padding: 0;
+      font-weight: 300;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    .jsLogo {
+      width: 100%;
+    }
+
+    #spotify, #git, #github{
+      width: 100%;
+    }
+
+    #rolesContainer {
+      display: flex;
+      flex-flow: row wrap;
+      height: 80%;
+      width: 100%;
+      justify-content: space-around;
+    }
+
+    .roleBox {
+      width: 30%;
+      text-align: center;
+      font-weight: 300;
+      font-size: 2vw;
+    }
+
+    .roleBox p {
+      margin: 5px 0;
+    }
+
+    .picBox {
+      width: 15vw;
+      height: 15vw;
+      border: 1px solid black;
+      border-radius: 50%;
+      display: block;
+      margin-left: 50%;
+      transform: translate(-50%, 0);
+      position: relative;
+    }
+
+    .picBox img {
+      max-width: 100%;
+      -webkit-clip-path: circle(50% at center);
+    }
+
+    #usContainer {
+      height: 80%;
+      display: flex;
+      justify-content: space-around;
+      flex-flow: row wrap;
+    }
+
+    .usColTitle {
+      width: 30%;
+      text-align: center;
+      font-weight: 300;
+    }
+
+    .usColumn {
+      width: 30%;
+      height: 90%;
+      text-align: center;
+      font-weight: 300;
+      overflow: scroll;
+    }
+
+    .usList {
+      padding: 0;
+      font-weight: 400;
+      margin-top: 0;
+    }
+
+    .userStory {
+      border: 1px solid black;
+      border-radius: 5px;
+      min-height: 20%;
+      margin-bottom: 10px;
+      padding: 10px;
+      text-align: left;
+      color: white;
+    }
+
+    #usCol3 li {
+      background-color: rgba(0,82,63,.85);
+    }
+    #usCol2 li {
+      background-color: rgba(0,162,128,.85);
+    }
+    #usCol1 li {
+      background-color: rgba(0,212,163,.85);
+    }
+
+    #modelSlide {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .modelColumn {
+      width: 30%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      font-weight: 300;
+      font-size: 2vw;
+    }
+
+    .modelShot {
+      margin: auto;
+      width: 100%;
+    }
+
+  </style>
+</head>
+
+<body>
+  <main>
+    <div id = "titleSlide" class="slide">
+      <p style="height: 50vw; text-align: center; font-size: 7vw; line-height: 50vw; margin: 0; font-weight: 700">PI.FM = P2P RADIO</p>
+    </div>
+    <div id="introSlide" class="slide">
+      <div id="mainCircle">
+        <div id="mainCircleText" style="position: absolute">
+          🔊 GROUP STATION 🔊</div>
+        <div id="user1" class="userCircle">
+          <p style="position: absolute; font-weight: 400; font-size: 1vw; bottom: 0; margin: 0">ME</p>
+          <p>🎸</p></div>
+        <div id="user2" class="userCircle">
+          <p style="position: absolute; font-weight: 400; font-size: 1vw; bottom: 0; margin: 0">YOU</p>
+          <p>🎻</p></div>
+        <div id="user3" class="userCircle">
+          <p style="position: absolute; font-weight: 400; font-size: 1vw; bottom: 0; margin: 0">OTHER</p>
+          <p>🎷</p></div>
+      </div>
+    </div>
+    <div id="framesSlide" class="slide">
+      <h1>WIREFRAMES</h1>
+      <div id="framesContainer">
+        <div id="framesCol1" class="framesColumn">
+          <img id="screenshot" src="https://i.imgur.com/7fJcrtl.png">
+        </div>
+        <div id="framesCol2" class="framesColumn">
+          <a id="demoLink" target="_blank" href="http://rydr79.axshare.com/">
+          <h1 id="demoText">INTERACTIVEDEMOINTERACTIVEDEMOINTERACTIVEDEMOINTERACTIVEDEMOINTERACTIVEDEMOINTERACTIVEDEMO</h1></a>
+        </div>
+      </div>
+    </div>
+    <div id="techSlide" class="slide">
+      <h1>TECHNOLOGIES</h1>
+      <div id="techsContainer">
+        <ul id='techCol1' class='techColumn'>
+          <li><p>API / OAuth</p></li>
+          <li><img id="spotify" src="https://i.imgur.com/kPP4w87.png"></li>
+        </ul>
+        <ul id='techCol2' class='techColumn'>
+          <li><p>JS</p></li>
+          <li><img class="jsLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/2000px-Node.js_logo.svg.png"></li>
+          <li><img class="jsLogo" src="http://mean.io/system/assets/img/logos/express.png"></li>
+          <li><img class="jsLogo" src="https://i.imgur.com/XUA58PB.png"></li>
+        </ul>
+        <ul id='techCol3' class='techColumn'>
+          <li><p>Version Control</p></li>
+          <li><img id="git" src="https://git-scm.com/images/logos/downloads/Git-Logo-Black.png"></li>
+          <li><img id="github" src="http://www.ryadel.com/wp-content/uploads/2015/03/github-logo.png"></li>
+        </ul>
+      </div>
+    </div>
+    <div id="roleSlide" class="slide">
+      <h1>ROLE CALL...</h1>
+      <div id="rolesContainer">
+        <div class="roleBox"><div class="picBox"><img class="clip-circle" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAIjAAAAJDQzOTU2YmZkLWQ5MWEtNDYzYy04ZTZmLWM0MWEwYmMyYmYxZg.jpg"></div><p>Presentation</p></div>
+        <div class="roleBox"><div class="picBox"><img class="clip-circle" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAZtAAAAJDczODVmZDExLTE5NDItNDYyNS05ZDg0LWY0MDIxMWI2M2ZjOA.jpg"></div><p>Documentation</p></div>
+        <div class="roleBox"><div class="picBox"><img class="clip-circle" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/5/005/04a/104/27bb6d1.jpg"></div><p>Agile</p></div>
+        <div class="roleBox"><div class="picBox"><img class="clip-circle" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ8AAAAJDBiYTE1YmQ0LTVjMGEtNDFlMS1hOTEzLTliMGY1ZDhhZjdhNQ.jpg"></div><p>Git</p></div>
+        <div class="roleBox"><div class="picBox"><img class="clip-circle" src="https://i.imgur.com/85Loj7p.jpg"></div><p>VC💸</p></div>
+      </div>
+    </div>
+    <div id="mapSlide" class="slide">
+      <h1>USER STORIES</h1>
+      <div id="usContainer">
+        <span class="usColTitle">MVP</span>
+        <span class="usColTitle">GOAL</span>
+        <span class="usColTitle">ICEBOX</span>
+        <div id="usCol1" class="usColumn">
+          <ul class="usList">
+            <li class="userStory">User should be able to log in with Spotify Oauth</li>
+            <li class="userStory">User can search other spotify users by username and full name</li>
+            <li class="userStory">User should be able to generate their own communal station based on songs from "circle" Spotify playlists</li>
+            <li class="userStory">User should be able to play songs from generated station</li>
+            <li class="userStory">User should be able to get access to their own station once logged in ("circle of one")</li>
+            <li class="userStory">User should be able to delete circles they have created</li>
+            <li class="userStory">User should be able to remove other users from circles they have created</li>
+            <li class="userStory">User should be able to see all circles they are part of</li>
+            <li class="userStory">User should be able to name their circle they created</li>
+          </ul>
+        </div>
+        <div id="usCol2" class="usColumn">
+          <ul class="usList">
+            <li class="userStory">App should display which user and which users playlist song was pulled from</li>
+            <li class="userStory">User should be able to skip songs on playlist</li>
+            <li class="userStory">User should be able to see their own Spotify profile picture</li>
+            <li class="userStory">While tuned into a station, User should be able to see who else in said station's circle is tuned in</li>
+          </ul>
+        </div>
+        <div id="usCol3" class="usColumn">
+          <ul class="usList">
+            <li class="userStory">PT. 1: User should be able to click "Save Playlist" which will then post a playlist to said users account containing all the songs played so far in that circle</li>
+            <li class="userStory">PT. 2: Every time a new song is pulled for the circle's station, that song is pushed to the saved playlist in their spotify account</li>
+            <li class="userStory">User should be able to choose which user playslists should be pulled to play from their circle</li>
+            <li class="userStory">User should be able to isolate (by genre) songs included in a station's playback</li>
+            <li class="userStory">User should be able to log in without a spotify account</li>
+            <li class="userStory">User should be able to select certain user playlists from circle</li>
+            <li class="userStory">User should be able to leave "circles" they are part of</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="modelSlide" class="slide">
+      <div id="modelCol1" class="modelColumn">
+        <img id="model1" class="modelShot" src="https://i.imgur.com/lTjtNX1.jpg">
+        <p style="margin: 0px; position: absolute; bottom: 5%; width: 100%; text-align: center"><i>initial modeling</i></p>
+      </div>
+      <div id="modelCol2" class="modelColumn">
+        <img id="model2" class="modelShot" src="https://i.imgur.com/tKl7PEL.jpg">
+        <p style="margin: 0px; position: absolute; bottom: 5%; width: 100%; text-align: center"><i>data flow</i></p>
+      </div>
+    </div>
+  </main>
+</body>
+
+<script>
+
+var slides = [
+  document.getElementById('titleSlide'),
+  document.getElementById('introSlide'),
+  document.getElementById('framesSlide'),
+  document.getElementById('techSlide'),
+  document.getElementById('roleSlide'),
+  document.getElementById('mapSlide'),
+  document.getElementById('modelSlide')
+]
+
+var currentIndex = 0;
+var finalIndex = 7;
+
+document.addEventListener('keydown', function(event) {
+  if(event.keyCode === 32 || event.keyCode === 39) {
+    slides[currentIndex].parentNode.
+      insertBefore(slides[currentIndex], slides[finalIndex]);
+    currentIndex++;
+    if (currentIndex === 7) {currentIndex = 0};
+    console.log(currentIndex);
+  } else if (event.keyCode == 37) {
+    if (currentIndex === 0) {
+      slides[currentIndex+6].parentNode.
+      insertBefore(slides[currentIndex+6], slides[currentIndex]);
+      currentIndex = 6;
+    } else {
+      slides[currentIndex-1].parentNode.
+        insertBefore(slides[currentIndex-1], slides[currentIndex]);
+      currentIndex = currentIndex - 1;
+    };
+  }
+});
+
+var speakerText = document.getElementById('mainCircleText').innerHTML;
+var speakerText1 = "🔉 GROUP STATION 🔉";
+var speakerText2 = "🔊 GROUP STATION 🔊";
+
+setInterval(function() {
+  if (speakerText == speakerText1) {
+    speakerText = speakerText2;
+    document.getElementById('mainCircleText').innerHTML = speakerText2;
+  } else {
+    speakerText = speakerText1;
+    document.getElementById('mainCircleText').innerHTML = speakerText1;
+  }
+}, 500)
+
+</script>
+
+</html>
