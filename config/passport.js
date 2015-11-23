@@ -4,21 +4,22 @@ module.exports = function(passport) {
   passport.use(new SpotifyStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:8000/welcome/auth/spotify/callback"
+    callbackURL: "http://localhost:8000/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ spotifyId: profile.id }, function (err, user) {
-      return done(err, user);
+    process.nextTick(function(){
+      return done(null, profile);
     });
+    // User.findOrCreate({ spotifyId: profile.id }, function (err, user) {
+    //   return done(err, user);
+    // });
   }
 ));
-passport.serializeUser(function(student, done) {
-      done(null, student.id);
-  });
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
 
-passport.deserializeUser(function(id, done) {
-  Student.findById(id, function(err, student) {
-    done(err, student);
-  });
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
 });
 }
