@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 
 var userSchema = new Schema({
   displayName: String,
+  email: String,
   spotifyId: String,
   profileImage: String,
   created: { type: Date, default: Date.now },
