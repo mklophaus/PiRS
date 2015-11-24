@@ -3,12 +3,11 @@ var mongoose = require('mongoose'),
     debug    = require('debug')('app:models');
 
 var userSchema = new Schema({
-  display_name: String,
+  displayName: String,
   spotifyId: String,
-  profile_image: String,
-  // email: String,
+  profileImage: String,
   created: { type: Date, default: Date.now },
-  // circles: [circleSchema]
+  circles: [{type: Schema.Types.ObjectId, ref: 'Circle'}]
 });
 
 var User = mongoose.model('User', userSchema);
@@ -37,6 +36,6 @@ module.exports = User;
 
 // in Passport (either serialze or deserialze...):
 
-// display_name = response.display_name
-// spotify_id = response.id
-// profile_image = response.images[0].url
+// displayName = response.display_name
+// spotifyId = response.id
+// profileImage = response.images[0].url
