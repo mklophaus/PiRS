@@ -33,7 +33,7 @@ require('ejs').delimiter = '$';
 
 // Create local variables for use thoughout the application.
 app.locals.title = app.get('title');
-
+app.locals.underscore = require('underscore');
 // Logging layer.
 app.use(logger('dev'));
 
@@ -50,21 +50,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Spotify middleware
-
-app.get('/auth/spotify',
-  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true }),
-  function(req, res){
-   // The request will be redirected to spotify for authentication, so this
-   // function will not be called.
-});
-
-app.get('/callback',
-  passport.authenticate('spotify', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/circles');
-});
 require('./config/passport')(passport);
 
 var endpoint = 'https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb';
@@ -90,27 +75,6 @@ app.use(debugReq);
 // Defines all of our "dynamic" routes.
 app.use('/', routes);
 
-require('./routes/index')(app, passport)
-
-var usersRoute = router.route('/users');
-
-// Create endpoint /api/users for POSTS
-usersRoute.post(function(req, res) {
-  // Create a new instance of the User model
-  var user = new User();
-
-  user.name = req.body.name;
-  user.type = req.body.type;
-
-  // Save the user and check for errors
-  user.save(function(err) {
-    if (err)
-      res.send(err);
-
-    res.json({ message: 'User added', data: user });
-  });
-});
-
 // Catches all 404 routes.
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -135,5 +99,6 @@ function debugReq(req, res, next) {
   debug('body:',   req.body);
   next();
 }
+
 app.listen(8000);
 module.exports = app;
