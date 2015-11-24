@@ -19,9 +19,9 @@ var generateRandomString = function(length) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
-  };
+};
 
-  var stateKey = 'spotify_auth_state';
+var stateKey = 'spotify_auth_state';
 
   // router.get('/', function(req,res){
   //   res.render('index', { title: "WELCOME TO BOOMSQUAD!"});
@@ -58,30 +58,20 @@ router.get('/callback',
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
-  });
-
-router.get('/refresh_token', function(req, res) {
-
-  // requesting access token from refresh token
-  var refresh_token = req.query.refresh_token;
-  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64')) },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
-
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });
-    }
-  });
 });
+
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+
+function isLoggedIn(req, res, next) {
+  if ( req.isAuthenticated() ) {
+    return next();
+  } else {
+    res.redirect('/');
+  }
+}
 
 module.exports = router;

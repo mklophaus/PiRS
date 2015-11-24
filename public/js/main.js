@@ -2,16 +2,12 @@ console.log('JS loaded!');
 
 $(document).ready(function() {
 
+var circles   = _.template($('#circles-template').html());
 
-var login     = _.template($('#login-template').html());
-var circles   = _.template($('#circles').html());
+var $destination;
 
-var $destination,
-    $templateEl;
+$destination  = $('main');
 
-$destination = $('#login');
-
-
-$destination.append(login);
+$destination.append(circles);
 
 });
