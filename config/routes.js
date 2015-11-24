@@ -40,7 +40,7 @@ var generateRandomString = function(length) {
       response_type: 'code',
       client_id: process.env.CLIENT_ID,
       scope: scope,
-      redirect_uri: 'http://localhost:8000/callback',
+      redirect_uri: 'http://localhost:3000/callback',
       state: state
     }));
 });
