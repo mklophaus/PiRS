@@ -1,0 +1,47 @@
+// {
+//   displayName: response.display_name,
+//   spotifyId: response.id,
+//   profilePicture: response.images[0].url,
+//   created: when,
+// }
+
+// each time the playlist array is updated, array saved in local storage
+
+// {
+//   circleId: circleId,
+//   users: [
+//     {
+//       spotifyId: beineken,
+//       displayName: Ben Benjamin,
+//       tracks: [
+//         {
+//           trackId: id,
+//           spotifyUrl: url,
+//           title: title,
+//           artist: artist,
+//           playlist: ben's birthday,
+//         },
+//         {
+//           trackId: id,
+//           spotifyUrl: url,
+//           title: title,
+//           artist: artist,
+//           playlist: ben's favs,
+//         },
+//         {
+//           trackId: id,
+//           spotifyUrl: url,
+//           title: title,
+//           artist: artist,
+//           playlist: top guys,
+//         }
+//       ]
+//     },
+//     {
+//       ...
+//     },
+//     {
+//       ...
+//     }
+//   ]
+// }
