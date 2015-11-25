@@ -8,8 +8,18 @@
     <main>
     <$ if (user) { $>
       <div>
-        <h1>Your Circles!</h1>
         <a href="/logout">Logout</a>
+        <script type="text/template" id="circles-template">
+        <h1>Welcome, <%= name %></h1>
+        <% if (userCircles.length > 0) { %>
+        <p>You have circles</p>
+        <% } else { %>
+          <p>You do not have circles, start looking for some homies and create a circle!</p>
+          <div class="input-field">
+            <input id="search" type="search" placeholder="search for friends">
+          </div>
+        <% } %>
+        </script>
       </div>
     <$ } else { $>
       <div>
@@ -18,7 +28,20 @@
       </div>
     <$ } $>
     </main>
+
+
+  <script>
+    var name        = '';
+    var userCircles = '';
+    <$ if (user) { $>
+      name = '<$= user.displayName $>';
+      userCircles = '<$= user.circles $>';
+    <$ } $>
+  </script>
+
+
   <$- include('partials/scripts') $>
   <$- include('partials/templates') $>
   </body>
+
 </html>
