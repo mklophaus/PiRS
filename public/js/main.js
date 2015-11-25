@@ -24,7 +24,8 @@ $(document).ready(function() {
 
 
 
-  function doSearch(currentSearch){
+    function doSearch(currentSearch){
+
     $.ajax({
       type: 'GET',
       url: buildUri(currentSearch),
@@ -32,36 +33,49 @@ $(document).ready(function() {
       console.log(jqXHR.status);
       console.log(textStatus);
       console.log(errorThrown);
-      alert("No User found!");
+      $('#friend').empty();
+      $('#friend').append('<p>No users match that ID</p>');
     },
       success: function(data){
-        console.log(data);
-        userData = data;
-        var nameDisplay = userData.display_name || userData.id;
+        foundUser = data;
+        if (foundUser.images.length > 0) {
+          profileImage = foundUser.images[0].url;
+        } else {
+          profileImage = null;
+        }
+
+        if (profileImage) {
+          $('#friend').append('<div id="proImg">');
+          $('#proImg').css('background-image', 'url(' + profileImage + ')');
+        } else {
+          $('#friend').append('<div id="proImg">');
+          $('#proImg').css('background-image', 'url(http://www.sessionlogs.com/media/icons/defaultIcon.png)');
+        }
+
+
+        if(foundUser.display_name) {
+          $('#friend').append(foundUser.display_name);
+        } else {
+          $('#friend').append(foundUser.id);
+        }
+        $('#friend').append('<button>Add to circle</button>')
       }
-
     });
-
   }
 
 
-  $('#search').on('keypress blur', function(evt) {
+  $('#search').on('keyup blur', function(evt) {
     var currentSearch = $('#search').val();
-    if (evt.keyCode === 13 || evt.type === 'blur') doSearch(currentSearch);
+      $('#friend').empty();
+      doSearch(currentSearch);
+
+    // if (evt.keyCode === 13) {
+    //   $('#friend').empty();
+    //   doSearch(currentSearch);
+    // } else {
+    //   $('#friend').empty();
+    //   doSearch(currentSearch);
+    // }
   });
-
-
-  function addUserToCircle() {
-
-    $.post('/api/circles', { fact: $('#addUser').val() }).done(function(data) {
-    $('#addUser').val('');
-    var updated = _.find(allUsers, function(user) {
-      return user._id === data._id;
-    });
-    updated.facts.push(data.facts.pop());
-    render();
-  });
-
-  }
 
 });
