@@ -10,6 +10,7 @@ var session      = require('express-session');
 var passport     = require('passport');
 var querystring  = require('querystring');
 
+require('dotenv').load();
 // Load local libraries.
 var env      = require('./config/environment'),
     mongoose = require('./config/database'),
@@ -20,7 +21,6 @@ var app = express();
 
 
 var router = express.Router();
-require('dotenv').load();
 
 
 // Configure the application (and set it's title!).
