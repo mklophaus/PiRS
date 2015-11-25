@@ -10,6 +10,18 @@ var welcomeController = require('../controllers/welcome');
 // root path:
 router.get('/', welcomeController.index);
 
+//TEMPORARY*********
+router.get('/testLib',function(req,res) {
+//  eval(locus);
+  var spotify = require('./spotifyApiHelper');
+  var Circle = require('../models/circle');
+  Circle.find({}, function(err, circles) {
+    var libraries = spotify.buildLibraries(circles[0].id, req.user.accessToken);
+    console.log(libraries);
+  });
+});
+//**********TEMPORARY
+
 // Spotify Login:
 var generateRandomString = function(length) {
     var text = '';
