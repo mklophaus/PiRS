@@ -1,5 +1,9 @@
 console.log('JS loaded!');
 
+var userId;
+var friendsToAdd = [];
+var friendId;
+
 $(document).ready(function() {
 
   var circles   = _.template($('#circles-template').html());
@@ -37,6 +41,7 @@ $(document).ready(function() {
       $('#friend').append('<p>No users match that ID</p>');
     },
       success: function(data){
+        console.log(data);
         foundUser = data;
         if (foundUser.images.length > 0) {
           profileImage = foundUser.images[0].url;
@@ -58,11 +63,15 @@ $(document).ready(function() {
         } else {
           $('#friend').append(foundUser.id);
         }
-        $('#friend').append('<button>Add to circle</button>')
+        $('#friend').append('<input type="submit" id="addToCircle" value="Add Friend">');
+        $('#addToCircle').on('click', function(){
+              var friend = $('#friend div').html();
+              $('#circleMembers').append('<li class="addedFriend" id="'+foundUser.id+'">'+foundUser.display_name+'</li>');
+              $('#friend').empty();
+          });
       }
     });
   }
-
 
   $('#search').on('keyup blur', function(evt) {
     var currentSearch = $('#search').val();
@@ -77,5 +86,24 @@ $(document).ready(function() {
     //   doSearch(currentSearch);
     // }
   });
+
+  var title = $('#titleField').val();
+
+  $('#createCircle').on('click', function(){
+    $.each($('.addedFriend'), function(i, friend){
+      friendId = $(friend).attr('id');
+      $.post('/users', {spotifyId: friendId},
+        function(data){
+          var newId = data._id;
+          friendsToAdd.push(newId);
+          console.log(friendsToAdd);
+        });
+    });
+  });
+
+  // $.post('/circles', {title: title, users: friendsToAdd}, function(data){console.log(data);}, function(err){console.log(err);});
+
+
+
 
 });
