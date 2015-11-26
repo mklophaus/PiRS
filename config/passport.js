@@ -14,14 +14,20 @@ module.exports = function(passport) {
       if (err) return done(err);
       if (user) {
         debug("OAuth successful, found user: ", user.displayName);
+        user.accessToken = accessToken;
+      //  user.save(function(user){
         return done(null, user);
+    //  })
+
       } else {
         debug("OAuth successful, user not found!");
 
         var newUser = new User({
           displayName: profile.displayName || profile.username,
           email:       profile.emails[0].value,
-          spotifyId:   profile.id
+          spotifyId:   profile.id,
+          profileImage: profile.images[0].url,
+          circles: []
         });
 
         newUser.save(function(err, user) {
@@ -35,10 +41,12 @@ module.exports = function(passport) {
   }));
 
   passport.serializeUser(function(user, done) {
-   done(null, user);
+   done(null, user.id);
   });
 
-  passport.deserializeUser(function(obj, done) {
-    done(null, obj);
+  passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+    done(null, user);
+  })
   });
 }

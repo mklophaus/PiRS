@@ -11,8 +11,6 @@ $(document).ready(function() {
       searchName    = '';
 
 
-
-
   var buildUri = function(nameInput) {
       var baseUri = 'https://api.spotify.com/v1/users/';
 
@@ -24,8 +22,9 @@ $(document).ready(function() {
       return baseUri + searchParam
     }
 
-  function doSearch(currentSearch){
 
+
+  function doSearch(currentSearch){
     $.ajax({
       type: 'GET',
       url: buildUri(currentSearch),
@@ -37,6 +36,8 @@ $(document).ready(function() {
     },
       success: function(data){
         console.log(data);
+        userData = data;
+        var nameDisplay = userData.display_name || userData.id;
       }
 
     });
@@ -49,5 +50,18 @@ $(document).ready(function() {
     if (evt.keyCode === 13 || evt.type === 'blur') doSearch(currentSearch);
   });
 
+
+  function addUserToCircle() {
+
+    $.post('/api/circles', { fact: $('#addUser').val() }).done(function(data) {
+    $('#addUser').val('');
+    var updated = _.find(allUsers, function(user) {
+      return user._id === data._id;
+    });
+    updated.facts.push(data.facts.pop());
+    render();
+  });
+
+  }
 
 });
