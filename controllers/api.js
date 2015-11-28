@@ -2,6 +2,7 @@ var User = require('../models/user');
 var Circle = require('../models/circle');
 var spotify = require('../config/spotifyApiHelper');
 var locus = require('locus');
+var async = require('async');
 
 var addCircleUsers = function(req, res, done){
   User.findOne(req.body, function(err, user) {
@@ -28,13 +29,26 @@ var indexCircle = function(req, res) {
   });
 };
 
-var createCircle = function(req, res) {
+var createCircle = function(req, res, done) {
   var circle = new Circle(req.body);
   circle.creator = req.user._id;
   circle.users.push(req.user._id);
-  circle.save(function(err){
-    if (err) res.send(err);
-    res.json(circle);
+  var userArray = JSON.parse(req.body.users);
+  async.each(userArray, function(user){
+    circle.users.push(user);
+  });
+  async.each(circle.users, function(user){
+    User.findOne({ '_id': user }, function(err, user) {
+      if (err) return done(err);
+      if (user) {
+        foundUser = user;
+        foundUser.circles.push(circle);
+        foundUser.save(function(err){
+          if (err) return done(err);
+        });
+        console.log(foundUser);
+      }
+    });
   });
 };
 

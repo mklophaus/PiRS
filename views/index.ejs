@@ -46,7 +46,7 @@
     var userCircles = [];
     <$ if (user) { $>
       name = '<$= user.displayName $>';
-      userCircles = <$= JSON.stringify(user.circles) $>;
+      userCircles = '<$= JSON.stringify(user.circles) $>';
     <$ } $>
   </script>
 
