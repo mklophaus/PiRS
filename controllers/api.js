@@ -11,7 +11,7 @@ var addCircleUsers = function(req, res, done){
       res.json(user);
     } else {
       var newUser = new User({
-        spotifyId: req.query.spotifyId,
+        spotifyId: req.body.spotifyId,
         circles: []
       });
       newUser.save(function(err, user) {
