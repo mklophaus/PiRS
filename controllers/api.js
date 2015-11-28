@@ -37,6 +37,26 @@ var createCircle = function(req, res, done) {
   async.each(userArray, function(user){
     circle.users.push(user);
   });
+    circle.save(function(err){
+      if (err) return done(err);
+      console.log("that shit SAVED.");
+    });
+
+  // var circle = Circle.create(req.body, function(err, newCircle){
+  //   var userArray = JSON.parse(req.body.users);
+  //   userArray.forEach(function(user){
+  //   eval(locus);
+  //     newCircle.users.push(user)
+  //   });
+  //   circle.creator = req.user._id;
+  //   circle.users.push(req.user._id);
+    // async.each(userArray, function(user){
+    //   circle.users.push(user);
+    // });
+
+
+
+
   async.each(circle.users, function(user){
     User.findOne({ '_id': user }, function(err, user) {
       if (err) return done(err);
