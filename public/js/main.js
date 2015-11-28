@@ -87,8 +87,6 @@ $(document).ready(function() {
     // }
   });
 
-  var title = $('#titleField').val();
-
   $('#createCircle').on('click', function(){
     $.each($('.addedFriend'), function(i, friend){
       friendId = $(friend).attr('id');
@@ -99,11 +97,22 @@ $(document).ready(function() {
           console.log(friendsToAdd);
         });
     });
+
+    var title = $('#titleField').val();
+    var postCircles = function(){
+      $.ajax({
+        url: '/circles',
+        type: 'POST',
+        data: {
+          title: title,
+          users: JSON.stringify(friendsToAdd)
+        },
+        sucess: function(data){
+          console.log(data);
+        }
+      });
+    }
+    setTimeout(postCircles, 500);
   });
-
-  // $.post('/circles', {title: title, users: friendsToAdd}, function(data){console.log(data);}, function(err){console.log(err);});
-
-
-
 
 });
