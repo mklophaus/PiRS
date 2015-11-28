@@ -107,7 +107,7 @@ $(document).ready(function() {
           title: title,
           users: JSON.stringify(friendsToAdd)
         },
-        sucess: function(data){
+        success: function(data){
           console.log(data);
         }
       });
@@ -115,4 +115,27 @@ $(document).ready(function() {
     setTimeout(postCircles, 500);
   });
 
+  $('#circlesList').delegate('.stationLink', 'click', function(evt){
+    var id = $(this).attr('id');
+    console.log(id);
+    evt.preventDefault();
+    $.ajax({
+      url: '/testLib',
+      type: 'GET',
+      data: {
+        _id: id
+      },
+      success: function(data) {
+        console.log(data);
+        $('#spotifyPlayer').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + ' frameborder="0" allowtransparency="true"></iframe>');
+      },
+      error: function() {
+        console.log('herb')
+      }
+    });
+  });
+
+
 });
+
+
