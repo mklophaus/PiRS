@@ -6,15 +6,22 @@ var express     = require('express'),
 
 // Require controllers.
 var welcomeController = require('../controllers/welcome');
-var circlesController = require('../controllers/api');
+var circlesController = require('../controllers/circles');
+var apiController     = require('../controllers/api');
 
-// root path:
+// =============Root Path==============
+// ====================================
 router.get('/', welcomeController.index);
 
+// =============API Routes=============
+// ====================================
+router.get('/indexCircle', apiController.indexCircle);
+router.get('/indexUser', apiController.indexUser);
+
+
+// =============App Routes=============
+// ====================================
 router.post('/circles', circlesController.createCircle);
-
-router.post('/users', circlesController.addCircleUsers);
-
 router.get('/testLib', function(req, res) {
   Circle.find({}, function(err, circles) {
     spotify.buildStation(req.query._id, req.user.accessToken).
@@ -27,19 +34,18 @@ router.get('/testLib', function(req, res) {
       });
   });
 });
-
-router.get('/libraries',function(req, res) {
-//  eval(locus);
+router.get('/libraries', function(req, res) {
   var spotify = require('./spotifyApiHelper');
   var Circle = require('../models/circle');
   Circle.find({}, function(err, circles) {
     var libraries = spotify.buildLibraries(circles[0].id, req.user.accessToken);
-    // console.log(libraries);
     res.json(libraries);
   });
 });
 
-// Spotify Login:
+
+// ============Spotify Login===========
+// ====================================
 var generateRandomString = function(length) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -52,26 +58,21 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-  // router.get('/', function(req,res){
-  //   res.render('index', { title: "WELCOME TO BOOMSQUAD!"});
+router.get('/login', function(req, res) {
 
-  // });
+var state = generateRandomString(16);
+res.cookie(stateKey, state);
 
-  router.get('/login', function(req, res) {
-
-  var state = generateRandomString(16);
-  res.cookie(stateKey, state);
-
-  // your application requests authorization
-  var scope = 'user-read-private user-read-email';
-  res.redirect('https://accounts.spotify.com/authorize?' +
-    querystring.stringify({
-      response_type: 'code',
-      client_id: process.env.CLIENT_ID,
-      scope: scope,
-      redirect_uri: 'http://localhost:3000/callback',
-      state: state
-    }));
+// your application requests authorization
+var scope = 'user-read-private user-read-email';
+res.redirect('https://accounts.spotify.com/authorize?' +
+  querystring.stringify({
+    response_type: 'code',
+    client_id: process.env.CLIENT_ID,
+    scope: scope,
+    redirect_uri: 'http://localhost:3000/callback',
+    state: state
+  }));
 });
 
 router.get('/auth/spotify',
