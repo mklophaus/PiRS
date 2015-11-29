@@ -6,14 +6,15 @@ var express     = require('express'),
 
 // Require controllers.
 var welcomeController = require('../controllers/welcome');
-var circlesController = require('../controllers/api');
+var circlesController = require('../controllers/circles');
+var apiController     = require('../controllers/api');
 
 // root path:
 router.get('/', welcomeController.index);
 
-router.post('/circles', circlesController.createCircle);
+router.post('/circles', apiController.createCircle);
 
-router.post('/users', circlesController.addCircleUsers);
+// router.post('/users', circlesController.addCircleUsers);
 
 router.get('/testLib', function(req, res) {
   Circle.find({}, function(err, circles) {
@@ -52,26 +53,21 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-  // router.get('/', function(req,res){
-  //   res.render('index', { title: "WELCOME TO BOOMSQUAD!"});
+router.get('/login', function(req, res) {
 
-  // });
+var state = generateRandomString(16);
+res.cookie(stateKey, state);
 
-  router.get('/login', function(req, res) {
-
-  var state = generateRandomString(16);
-  res.cookie(stateKey, state);
-
-  // your application requests authorization
-  var scope = 'user-read-private user-read-email';
-  res.redirect('https://accounts.spotify.com/authorize?' +
-    querystring.stringify({
-      response_type: 'code',
-      client_id: process.env.CLIENT_ID,
-      scope: scope,
-      redirect_uri: 'http://localhost:3000/callback',
-      state: state
-    }));
+// your application requests authorization
+var scope = 'user-read-private user-read-email';
+res.redirect('https://accounts.spotify.com/authorize?' +
+  querystring.stringify({
+    response_type: 'code',
+    client_id: process.env.CLIENT_ID,
+    scope: scope,
+    redirect_uri: 'http://localhost:3000/callback',
+    state: state
+  }));
 });
 
 router.get('/auth/spotify',
