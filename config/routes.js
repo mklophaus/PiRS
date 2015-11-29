@@ -16,12 +16,17 @@ router.get('/', welcomeController.index);
 // =============API Routes=============
 // ====================================
 router.get('/indexCircle', apiController.indexCircle);
-router.get('/indexUser', apiController.indexUser);
+router.get('/indexCircle/:id', apiController.showCircle);
 
+
+router.get('/indexUser', apiController.indexUser);
 
 // =============App Routes=============
 // ====================================
 router.post('/circles', circlesController.createCircle);
+
+router.delete('/indexCircle/:id', circlesController.destroyCircle)
+
 router.get('/testLib', function(req, res) {
   Circle.find({}, function(err, circles) {
     spotify.buildStation(req.query._id, req.user.accessToken).
@@ -34,6 +39,8 @@ router.get('/testLib', function(req, res) {
       });
   });
 });
+
+
 router.get('/libraries', function(req, res) {
   var spotify = require('./spotifyApiHelper');
   var Circle = require('../models/circle');
