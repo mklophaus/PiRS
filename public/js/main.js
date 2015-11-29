@@ -127,7 +127,16 @@ $(document).ready(function() {
     });
   });
 
-  $('#spotifyPlayer').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '" frameborder="0" allowtransparency="true"></iframe>');
+
+  function deleteCircle (id) {
+    $('#' + id).remove();
+    $.ajax({
+      type: 'DELETE',
+      url: '/indexCircle/' + id
+    }).done(function(data) {
+      console.log(data);
+    });
+  }
 
 });
 
