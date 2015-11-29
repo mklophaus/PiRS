@@ -12,6 +12,7 @@ function buildTracklistUri(playlistId, userId) {
 module.exports = {
   buildPlaylistUri: buildPlaylistUri,
   buildTracklistUri: buildTracklistUri,
+
   getPlaylists: function(userId, token, callback) {
     var options = {
       url: buildPlaylistUri(userId),
@@ -95,39 +96,40 @@ module.exports = {
         console.log(thing);
       });
     });
-  function pullTracks(userLibs){
-    var isNullOrUndefined = function(element, index, array) {
-      return element === null || element === undefined;
-    };
+    function pullTracks(userLibs){
+      var isNullOrUndefined = function(element, index, array) {
+        return element === null || element === undefined;
+      };
 
-
-    var masterPlaylist = [];
-    iter = 0;
-    for (var i = 0; i < 10; i++) {
-      for (var x = 0; x < userLibs.length; x++) {
-        var newIndex = Math.floor(Math.random()*userLibs[x].tracks.length);
-        var nextTrack = userLibs[x].tracks[newIndex];
-        if (userLibs[x].tracks.every(isNullOrUndefined)) {
-          console.log(userLibs[x].name + ", add more songs to your Spotify playlists!");
-          return masterPlaylist.join();
-        if (nextTrack.track.id === null || (masterPlaylist.join().indexOf(nextTrack.track.id) > -1)) {
-          while (nextTrack.track.id === null || (masterPlaylist.join().indexOf(nextTrack.track.id) > -1)) {
-            newIndex = Math.floor(Math.random()*userLibs[x].tracks.length);
-            nextTrack = userLibs[x].tracks[newIndex];
-            userLibs[x].tracks.splice(newIndex, 1);
+      var masterPlaylist = [];
+      iter = 0;
+      for (var i = 0; i < 10; i++) {
+        for (var x = 0; x < userLibs.length; x++) {
+          var newIndex = Math.floor(Math.random()*userLibs[x].tracks.length);
+          var nextTrack = userLibs[x].tracks[newIndex];
+          if (userLibs[x].tracks.every(isNullOrUndefined)) {
+            console.log(userLibs[x].name + ", add more songs to your Spotify playlists!");
+            return masterPlaylist.join();
           }
-          masterPlaylist.push(nextTrack.track.id);
-          iter++;
-          console.log(iter + '. "' + nextTrack.track.name + '", from ' + nextTrack.playlistName + ' (' + userLibs[x].name + ')');
-        } else {
-            userLibs[x].tracks.splice(newIndex, 1);
+          if (nextTrack.track.id === null || (masterPlaylist.join().indexOf(nextTrack.track.id) > -1)) {
+            while (nextTrack.track.id === null || (masterPlaylist.join().indexOf(nextTrack.track.id) > -1)) {
+              newIndex = Math.floor(Math.random()*userLibs[x].tracks.length);
+              nextTrack = userLibs[x].tracks[newIndex];
+              userLibs[x].tracks.splice(newIndex, 1);
+            }
             masterPlaylist.push(nextTrack.track.id);
             iter++;
             console.log(iter + '. "' + nextTrack.track.name + '", from ' + nextTrack.playlistName + ' (' + userLibs[x].name + ')');
-        };
+          } else {
+              userLibs[x].tracks.splice(newIndex, 1);
+              masterPlaylist.push(nextTrack.track.id);
+              iter++;
+              console.log(iter + '. "' + nextTrack.track.name + '", from ' + nextTrack.playlistName + ' (' + userLibs[x].name + ')');
+          };
         };
         return masterPlaylist.join();
-    };
-    return p1;
+      };
+      return p1;
+    }
   }
 }
