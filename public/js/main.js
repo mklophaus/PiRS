@@ -1,5 +1,4 @@
-console.log('JS loaded!');
-
+console.log('main.js loaded!');
 
 $(document).ready(function() {
 
