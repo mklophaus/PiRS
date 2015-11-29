@@ -2,6 +2,7 @@ var request = require('request'),
     async   = require('async');
 var Circle = require('../models/circle');
 var locus = require('locus');
+
 function buildPlaylistUri(userId) {
   return `https:\/\/api.spotify.com/v1/users/${userId}/playlists`
 }
@@ -76,9 +77,6 @@ module.exports = {
           });
         }); // each user
         Promise.all(circlePromises).then(function(libraries) {
-          // console.log('**********************************');
-          // console.log(libraries);
-          // console.log('**********************************');
           resolve(libraries);
         }, function(thang) {
           console.log(thang);
@@ -90,58 +88,45 @@ module.exports = {
     self = this;
     var p1 = new Promise(function(resolve, reject) {
       var libraryPromise = self.buildLibraries(circleId, accessToken);
-      // console.log(libraryPromise);
-      // setTimeout(function(){console.log(libraryPromise)}, 2000);
       libraryPromise.then(function(libraries) {
         var pullTracksResult = pullTracks(libraries);
-        // console.log(libraries, pullTracksResult);
         resolve(pullTracksResult);
       }, function(thing) {
         console.log(thing);
       });
     });
-function pullTracks(userLibs){
+  function pullTracks(userLibs){
+    var isNullOrUndefined = function(element, index, array) {
+      return element === null || element === undefined;
+    };
 
-      var isNullOrUndefined = function(element, index, array) {
-        return element === null || element === undefined;
-      };
 
-
-     var masterPlaylist = [];
-          iter = 0;
-          for (var i = 0; i < 10; i++) {
-            for (var x = 0; x < userLibs.length; x++) {
-              var newIndex = Math.floor(Math.random()*userLibs[x].tracks.length);
-              var nextTrack = userLibs[x].tracks[newIndex];
-              // eval(locus);
-              if (userLibs[x].tracks.every(isNullOrUndefined)) {
-                console.log(userLibs[x].name + ", add more songs to your Spotify playlists!");
-                // x++;
-                return masterPlaylist.join();
-              }
-
-              if (nextTrack.track.id === null || (masterPlaylist.join().indexOf(nextTrack.track.id) > -1)) {
-                while (nextTrack.track.id === null || (masterPlaylist.join().indexOf(nextTrack.track.id) > -1)) {
-                  newIndex = Math.floor(Math.random()*userLibs[x].tracks.length);
-                  nextTrack = userLibs[x].tracks[newIndex];
-                  userLibs[x].tracks.splice(newIndex, 1);
-                }
-                masterPlaylist.push(nextTrack.track.id);
-                iter++;
-                console.log(iter + '. "' + nextTrack.track.name + '", from ' + nextTrack.playlistName + ' (' + userLibs[x].name + ')');
-              } else {
-                  userLibs[x].tracks.splice(newIndex, 1);
-                  masterPlaylist.push(nextTrack.track.id);
-                  iter++;
-                  console.log(iter + '. "' + nextTrack.track.name + '", from ' + nextTrack.playlistName + ' (' + userLibs[x].name + ')');
-              }
-
-            };
-          };
-          // console.log(userLibs);
-          // console.log(masterPlaylist.join());
+    var masterPlaylist = [];
+    iter = 0;
+    for (var i = 0; i < 10; i++) {
+      for (var x = 0; x < userLibs.length; x++) {
+        var newIndex = Math.floor(Math.random()*userLibs[x].tracks.length);
+        var nextTrack = userLibs[x].tracks[newIndex];
+        if (userLibs[x].tracks.every(isNullOrUndefined)) {
+          console.log(userLibs[x].name + ", add more songs to your Spotify playlists!");
           return masterPlaylist.join();
-
+        if (nextTrack.track.id === null || (masterPlaylist.join().indexOf(nextTrack.track.id) > -1)) {
+          while (nextTrack.track.id === null || (masterPlaylist.join().indexOf(nextTrack.track.id) > -1)) {
+            newIndex = Math.floor(Math.random()*userLibs[x].tracks.length);
+            nextTrack = userLibs[x].tracks[newIndex];
+            userLibs[x].tracks.splice(newIndex, 1);
+          }
+          masterPlaylist.push(nextTrack.track.id);
+          iter++;
+          console.log(iter + '. "' + nextTrack.track.name + '", from ' + nextTrack.playlistName + ' (' + userLibs[x].name + ')');
+        } else {
+            userLibs[x].tracks.splice(newIndex, 1);
+            masterPlaylist.push(nextTrack.track.id);
+            iter++;
+            console.log(iter + '. "' + nextTrack.track.name + '", from ' + nextTrack.playlistName + ' (' + userLibs[x].name + ')');
+        };
+        };
+        return masterPlaylist.join();
     };
     return p1;
   }
