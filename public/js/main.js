@@ -126,6 +126,9 @@ $(document).ready(function() {
       }
     });
   });
+
+  $('#spotifyPlayer').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '" frameborder="0" allowtransparency="true"></iframe>');
+
 });
 
 
