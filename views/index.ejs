@@ -16,12 +16,10 @@
           <% if (userCircles.length > 0) { %>
             <% userCircles.forEach(function(circle){ %>
               <div>
-                <%= circle.title %>
+                <span id="<%= circle._id %>" <%= circle.title %></span>
                 <button id="<%= circle._id %>" class="stationLink">Generate</button>
                 <%= circle.users %>
-
                 <input type="button" value="X" id="<%= circle._id %>" class="deleteCircle">
-
                 </div>
             <% });%>
               </div>
