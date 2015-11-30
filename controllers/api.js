@@ -38,7 +38,7 @@ var displayCircleUsers = function(req, res) {
 
 module.exports = {
   indexCircle: indexCircle,
-  showCircle: showCircle
+  showCircle: showCircle,
   findCircle: findCircle,
   indexUser: indexUser,
   displayCircleUsers: displayCircleUsers
