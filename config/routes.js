@@ -24,8 +24,10 @@ router.get('/indexUser', apiController.indexUser);
 // =============App Routes=============
 // ====================================
 router.post('/circles', circlesController.createCircle);
+router.delete('/circles/:id', circlesController.destroyCircle);
 
-router.delete('/indexCircle/:id', circlesController.destroyCircle)
+
+
 
 router.get('/testLib', function(req, res) {
   Circle.find({}, function(err, circles) {
