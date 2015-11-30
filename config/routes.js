@@ -65,25 +65,42 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-router.get('/login', function(req, res) {
 
-var state = generateRandomString(16);
-res.cookie(stateKey, state);
+  // router.get('/', function(req,res){
+  //   res.render('index', { title: "WELCOME TO BOOMSQUAD!"});
 
-// your application requests authorization
-var scope = 'user-read-private user-read-email';
-res.redirect('https://accounts.spotify.com/authorize?' +
-  querystring.stringify({
-    response_type: 'code',
-    client_id: process.env.CLIENT_ID,
-    scope: scope,
-    redirect_uri: 'http://localhost:3000/callback',
-    state: state
-  }));
-});
+  // });
+
+// router.get('/login',
+//   passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private']});
+//      // The request will be redirected to spotify for authentication, so this
+//      // function will not be called.
+
+//     // var state = generateRandomString(16);
+//     // res.cookie(stateKey, state);
+
+//     // // your application requests authorization
+//     // var scope = 'user-read-private user-read-email';
+//     // res.redirect('https://accounts.spotify.com/authorize?' +
+//     //   querystring.stringify({
+//     //     response_type: 'code',
+//     //     client_id: process.env.CLIENT_ID,
+//     //     scope: scope,
+//     //     redirect_uri: 'https://piradio.herokuapp.com/callback',
+//     //     state: state
+//     //   }));
+// });
+
 
 router.get('/auth/spotify',
   passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true }),
+  function(req, res){
+   // The request will be redirected to spotify for authentication, so this
+   // function will not be called.
+});
+
+router.get('/login',
+  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private']}),
   function(req, res){
    // The request will be redirected to spotify for authentication, so this
    // function will not be called.

@@ -9,8 +9,10 @@ var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 var passport     = require('passport');
 var querystring  = require('querystring');
+var locus        = require('locus');
 
-require('dotenv').load();
+if (process.env.NODE_ENV != 'production') require('dotenv').load();
+
 // Load local libraries.
 var env      = require('./config/environment'),
     mongoose = require('./config/database'),
