@@ -34,7 +34,7 @@ Tasks were delegated and roles were identified as a mutual team decision. The pl
 ​
 ​
 ##Heroku/Website
-[Pi Radio](www.pirs.fm)
+[Pi Radio](http://www.pirs.fm)
 ​
 ##Model/Wireframes
 [Model/Wireframe](http://rydr79.axshare.com/#p=login)
@@ -45,7 +45,7 @@ Tasks were delegated and roles were identified as a mutual team decision. The pl
 * Manipulating API to get correct information needed for functionality of the App
 ​
 ​
-## Installation
+##Installation
 ​
 To run the application locally you will need to:
 ​
