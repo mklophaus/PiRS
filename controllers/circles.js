@@ -1,8 +1,9 @@
-var User = require('../models/user');
-var Circle = require('../models/circle');
+var User    = require('../models/user');
+var Circle  = require('../models/circle');
+var api     = require('../controllers/api');
 var spotify = require('../config/spotifyApiHelper');
-var locus = require('locus');
-var async = require('async');
+var locus   = require('locus');
+var async   = require('async');
 
 
 var createCircle = function(req, res, done) {
@@ -20,6 +21,7 @@ var createCircle = function(req, res, done) {
     },
     // "userid" {_id: 'userid'}
     function findCircleUsers(callback){
+      // eval(locus);
       circleUsersString.forEach(function(userString){
         User.findOne({ 'spotifyId': userString}, function(err, foundUser) {
           if (err) return done(err);
@@ -27,6 +29,7 @@ var createCircle = function(req, res, done) {
             circle.users.push(foundUser._id);
             circle.save(function(err, circle){
               if (err) return done(err);
+               // res.json(circle);
             });
           } else {
             // eval(locus);
@@ -38,6 +41,7 @@ var createCircle = function(req, res, done) {
             circle.users.push(newUser._id);
             circle.save(function(err, circle){
               if (err) return done(err);
+             // res.json(circle);
             });
             newUser.save(function(err, user) {
               if (err) return done(err);
@@ -48,7 +52,8 @@ var createCircle = function(req, res, done) {
       callback(null, 'two');
     },
     function assignCircles(callback){
-      circle.users.forEach(function(user){
+      var array = circle.users
+      async.each(array, function(user){
         User.findOne({ '_id': user }, function(err, user) {
           if (err) return done(err);
           if (user) {
@@ -77,10 +82,16 @@ var createCircle = function(req, res, done) {
 };
 
 var updateCircle = function(req, res) {
-  req.record.set(req.body);
-  req.record.save(function (err, record) {
-    res.json(record);
-  });
+    var circle = api.displayCircleUsers(req, res);
+
+      // eval(locus);
+
+  // res.json(circle)
+  // res.send('test');
+  // req.record.set(req.body);
+  // req.record.save(function (err, record) {
+  //   res.json(record);
+  // });
 };
 
 var destroyCircle = function(req, res) {
