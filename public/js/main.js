@@ -127,16 +127,16 @@ $(document).ready(function() {
     });
   });
 
-
-  function deleteCircle (id) {
-    $('#' + id).remove();
-    $.ajax({
-      type: 'DELETE',
-      url: '/indexCircle/' + id
-    }).done(function(data) {
-      console.log(data);
-    });
-  }
+  $('#circlesList').delegate('.deleteCircle', 'click', function(evt){
+        var id = $(this).attr('id');
+        $('#' + id).remove();
+        $.ajax({
+          method: 'DELETE',
+          url: '/circles/' + id
+        }).done(function(data) {
+          console.log(data);
+        });
+      });
 
 });
 

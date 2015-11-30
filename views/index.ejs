@@ -15,9 +15,9 @@
           <% if (userCircles.length > 0) { %>
             <div id="circlesList">
               <% userCircles.forEach(function(circle){ %>
-                <%= circle.title %>
+                <span class="circlesAdded" id="<%= circle.id %>"> <%= circle.title %></span>
 
-                <input type="button" value="X" class="deleteCircle" id='<%= circle._id %>' onclick="deleteCircle('<%= circle._id %>')">
+                <input type="button" value="X" id="<%= circle._id %>" class="deleteCircle">
 
                 <a href="/testLib" id="<%= circle._id %>" class="stationLink">Generate</a>
               <% });%>
