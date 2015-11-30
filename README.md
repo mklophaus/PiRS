@@ -43,12 +43,10 @@ Tasks were delegated and roles were identified as a mutual team decision. The pl
 * Using an unfamiliar Oauth
 * Managing workload and Github pull/push requests
 * Manipulating API to get correct information needed for functionality of the App
-​
-​
+
+
 ##Installation
-​
 To run the application locally you will need to:
-​
 * Run npm install
 * Run npm install for these additional items:
     * node-sass-middleware (install globally with "-g")
