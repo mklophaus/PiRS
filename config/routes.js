@@ -1,13 +1,15 @@
 var express     = require('express'),
     router      = new express.Router(),
     querystring = require('querystring'),
-    passport    = require('passport');
-
+    passport    = require('passport'),
+    Circle      = require('../models/circle');
 
 // Require controllers.
 var welcomeController = require('../controllers/welcome');
 var circlesController = require('../controllers/circles');
 var apiController     = require('../controllers/api');
+var spotify           = require('../config/spotifyApiHelper');
+
 
 // =============Root Path==============
 // ====================================
@@ -16,25 +18,26 @@ router.get('/', welcomeController.index);
 // =============API Routes=============
 // ====================================
 router.get('/indexCircle', apiController.indexCircle);
+router.get('/findCircle', apiController.findCircle);
 router.get('/indexUser', apiController.indexUser);
 
 
 // =============App Routes=============
 // ====================================
-router.post('/circles', circlesController.createCircle);
-router.get('/testLib', function(req, res) {
-  Circle.find({}, function(err, circles) {
-    spotify.buildStation(req.query._id, req.user.accessToken).
+router.post('/circles', isLoggedIn, circlesController.createCircle);
+router.get('/testLib', isLoggedIn, function(req,res) {
+    spotify.buildStation(req.query.disId, req.user.accessToken).
       then(function(station) {
         res.json(station);
         console.log(station);
       }).
       then(function(){
+        console.log('hey bu')
+        console.log()
         res.redirect('/')
       });
-  });
 });
-router.get('/libraries', function(req, res) {
+router.get('/libraries', isLoggedIn, function(req, res) {
   var spotify = require('./spotifyApiHelper');
   var Circle = require('../models/circle');
   Circle.find({}, function(err, circles) {
