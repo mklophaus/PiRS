@@ -14,7 +14,9 @@ $(document).ready(function() {
   // ====================================
 
   $destination.append(circles);
+  function circleView(){
 
+  }
 
   // ================Main================
   // ====================================
@@ -81,7 +83,6 @@ $(document).ready(function() {
       doSearch(currentSearch);
   });
 
-
   $('#createCircle').on('click', function(){
     var title = $('#titleField').val();
     $.each($('.addedFriend'), function(i, friend){
@@ -96,6 +97,7 @@ $(document).ready(function() {
         title: title,
       },
       success: function(data){
+        // new CircleView(data);
         console.log(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -108,21 +110,21 @@ $(document).ready(function() {
 
 
   $('#circlesList').delegate('.stationLink', 'click', function(evt){
+    evt.preventDefault();
     var id = $(this).attr('id');
     console.log(id);
-    evt.preventDefault();
     $.ajax({
-      url: '/testLib',
       type: 'GET',
+      url: 'http://localhost:3000/testLib',
       data: {
-        _id: id
+        disId: id
       },
       success: function(data) {
         console.log(data);
-        $('#spotifyPlayer').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + ' frameborder="0" allowtransparency="true"></iframe>');
+        $('#spotifyPlayer').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '" frameborder="0" allowtransparency="true"></iframe>');
       },
       error: function() {
-        console.log('herb');
+        console.log('herb')
       }
     });
   });

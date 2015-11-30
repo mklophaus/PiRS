@@ -18,6 +18,7 @@ var createCircle = function(req, res, done) {
       });
       callback(null, 'one');
     },
+    // "userid" {_id: 'userid'}
     function findCircleUsers(callback){
       circleUsersString.forEach(function(userString){
         User.findOne({ 'spotifyId': userString}, function(err, foundUser) {
@@ -29,17 +30,19 @@ var createCircle = function(req, res, done) {
                res.json(circle);
             });
           } else {
+            // eval(locus);
+            // req.body.users.forEach(function(user))
             var newUser = new User({
-              spotifyId: req.body.spotifyId,
+              spotifyId: userString,
               circles: []
             });
             circle.users.push(newUser._id);
             circle.save(function(err, circle){
               if (err) return done(err);
+            //  res.json(circle);
             });
             newUser.save(function(err, user) {
               if (err) return done(err);
-            //  res.json(user);
             });
           }
         });

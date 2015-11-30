@@ -20,6 +20,11 @@ var showCircle = function(req, res){
   });
 };
 
+var findCircle = function(req, res) {
+  Circle.find({'_id': req.query._id }, function(err, record) {
+    res.json(record);
+  })
+};
 
 var indexUser = function(req, res) {
   User.find({}, function(err, records) {
@@ -27,8 +32,14 @@ var indexUser = function(req, res) {
   });
 };
 
+var displayCircleUsers = function(req, res) {
+
+}
+
 module.exports = {
   indexCircle: indexCircle,
+  showCircle: showCircle,
+  findCircle: findCircle,
   indexUser: indexUser,
-  showCircle: showCircle
+  displayCircleUsers: displayCircleUsers
 }
