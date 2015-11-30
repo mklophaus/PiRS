@@ -9,9 +9,13 @@ $(document).ready(function() {
       searchName    = '',
       userId,
       friendId;
-
   // =============Templating=============
   // ====================================
+
+
+  function render() {
+    circles;
+  }
 
   $destination.append(circles);
   function circleView(){
@@ -106,6 +110,7 @@ $(document).ready(function() {
         console.log(errorThrown);
       }
     });
+      render();
   });
 
 
@@ -137,6 +142,7 @@ $(document).ready(function() {
           url: '/circles/' + id
         }).done(function(data) {
           console.log(data);
+          render();
         });
       });
 
