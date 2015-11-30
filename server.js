@@ -12,6 +12,7 @@ var querystring  = require('querystring');
 var locus        = require('locus');
 
 require('dotenv').load();
+
 // Load local libraries.
 var env      = require('./config/environment'),
     mongoose = require('./config/database'),
