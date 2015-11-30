@@ -53,17 +53,9 @@
           <script type="text/template" id="circle-template">
             <% if (userCircles.length > 0) { %>
             <% userCircles.forEach(function(circle){ %>
-<<<<<<< HEAD
-              <div>
-                <span id="<%= circle._id %>" <%= circle.title %></span>
-                <button id="<%= circle._id %>" class="stationLink">Generate</button>
-                <%= circle.users %>
-                <input type="button" value="X" id="<%= circle._id %>" class="deleteCircle">
-=======
               <div class="circle">
                 <div class="circleHeader">
                   <div class="circleTitle"><%= circle.title %></div>
->>>>>>> emdubb-update
                 </div>
                 <div data-indexNumber="<%= circle._id %>" class="playButton stationLink"><img src="https://i.imgur.com/ODkyHmb.png"></div>
                 <div class="circleMembers">
