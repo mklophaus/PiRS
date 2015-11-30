@@ -40,7 +40,7 @@ module.exports = function(passport) {
           displayName:  profile.displayName || profile.username,
           email:        profile.emails[0].value,
           spotifyId:    profile.id,
-          profileImage: null,
+          profileImage: "https://i.imgur.com/NRhYDQD.png",
           circles:      [],
           accessToken:  accessToken
         });

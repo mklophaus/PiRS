@@ -64,12 +64,12 @@ $(document).ready(function() {
           $('#proImg').css('background-image', 'url(' + profileImage + ')');
         } else {
           $('#friend').append('<div id="proImg">');
-          $('#proImg').css('background-image', 'url(http://www.sessionlogs.com/media/icons/defaultIcon.png)');
+          $('#proImg').css('background-image', 'url(https://i.imgur.com/NRhYDQD.png)');
         }
 
 
         if(foundUser.display_name) {
-          $('#friend').append(foundUser.display_name);
+          $('#friend').append('<div id="friendName">'+foundUser.display_name+'</div>');
         } else {
           $('#friend').append(foundUser.id);
         }
@@ -107,6 +107,10 @@ $(document).ready(function() {
       success: function(data){
         // new CircleView(data);
         console.log(data);
+        // $('titleField').val().empty();
+        // $('#search').val().empty();
+        // $('#friend').empty();
+        // $('#friendsToAdd').empty();
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.status);
@@ -124,13 +128,25 @@ $(document).ready(function() {
     console.log(id);
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/testLib',
+      url: '/testLib',
       data: {
         disId: id
       },
       success: function(data) {
         console.log(data);
-        $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '" frameborder="0" allowtransparency="true"></iframe>');
+        // $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
+          $("iframe").remove()
+
+          $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
+          // $spotifyPlayer.append($("main"));
+          function respondify() {
+          $('iframe[src*="embed.spotify.com"]').each( function() {
+            $(this).css('width',$(this).parent(3).css('width'));
+            $(this).attr('src',$(this).attr('src'));
+          });
+
+          respondify();
+        }
       },
       error: function() {
         console.log('herb')
@@ -190,6 +206,7 @@ $(document).ready(function() {
       circleMembers.children(".circleMember").css({"width": "100%", "border": "1px solid black"})
       circleMembers.children(".currentUser").css({"display": "flex"});
       circleMembers.children(".circleMember").children(".circleMemberName").css({"display": "inline"});
+      circleMembers.children(".circleMember").children(".circleMemberDelete").css("visibility", "visible");
       $(parent).children('.deleteCircle').css("display", "inline-block");
       $(parent).children().css("display", "inline-block");
       circleMembers.hide();
@@ -209,6 +226,24 @@ $(document).ready(function() {
       });
     }
   });
+
+  // $(".playButton").on('click', function() {
+  //   // console.log($("main"))
+
+  //   $("iframe").remove()
+
+  //   $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
+  //   // $spotifyPlayer.append($("main"));
+  //   function respondify() {
+  //   $('iframe[src*="embed.spotify.com"]').each( function() {
+  //     $(this).css('width',$(this).parent(3).css('width'));
+  //     $(this).attr('src',$(this).attr('src'));
+  //   });
+
+  //   respondify();
+  // }
+  // })
+
 });
 
 
