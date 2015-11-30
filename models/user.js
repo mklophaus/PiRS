@@ -10,7 +10,8 @@ var userSchema = new Schema({
   spotifyId: String,
   profileImage: String,
   created: { type: Date, default: Date.now },
-  circles: [{type: Schema.Types.ObjectId, ref: 'Circle'}]
+  accessToken: String,
+  circles: Array
 });
 
 userSchema.methods.getPlaylists = function(callback) {

@@ -3,58 +3,43 @@ var Circle = require('../models/circle');
 var spotify = require('../config/spotifyApiHelper');
 var locus = require('locus');
 
-var addCircleUsers = function(req, res, done){
-  User.findOne(req.body, function(err, user) {
-    if (err) return done(err);
-    if (user) {
-      res.json(user);
-    } else {
-      var newUser = new User({
-        spotifyId: req.query.spotifyId,
-        circles: []
-      });
-      newUser.save(function(err, user) {
-        if (err) return done(err);
-        res.json(user);
-      });
-    }
-  });
-};
-
-
 var indexCircle = function(req, res) {
   Circle.find({}, function(err, records) {
     res.json(records);
   });
 };
 
-var createCircle = function(req, res) {
-  var circle = new Circle(req.body);
-  circle.creator = req.user._id;
-  circle.users.push(req.user._id);
-  circle.save(function(err){
-    if (err) res.send(err);
+var showCircle = function(req, res){
+  var id = req.params.id;
+  Circle.findById(id, function(err, circle){
+    console.log("GOT TO THIS");
+    if (err) {
+      res.send(err);
+    }
     res.json(circle);
   });
 };
 
-var updateCircle = function(req, res) {
-  req.record.set(req.body);
-  req.record.save(function (err, record) {
+var findCircle = function(req, res) {
+  Circle.find({'_id': req.query._id }, function(err, record) {
     res.json(record);
+  })
+};
+
+var indexUser = function(req, res) {
+  User.find({}, function(err, records) {
+    res.json(records);
   });
 };
 
-var destroyCircle = function(req, res) {
-  req.record.remove(function (err, record) {
-    res.json(record);
-  });
-};
+var displayCircleUsers = function(req, res) {
+
+}
 
 module.exports = {
-  addCircleUsers: addCircleUsers,
   indexCircle: indexCircle,
-  createCircle: createCircle,
-  updateCircle: updateCircle,
-  destroyCircle: destroyCircle
+  showCircle: showCircle,
+  findCircle: findCircle,
+  indexUser: indexUser,
+  displayCircleUsers: displayCircleUsers
 }

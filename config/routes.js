@@ -1,32 +1,58 @@
 var express     = require('express'),
     router      = new express.Router(),
     querystring = require('querystring'),
-    passport    = require('passport');
-
+    passport    = require('passport'),
+    Circle      = require('../models/circle');
 
 // Require controllers.
 var welcomeController = require('../controllers/welcome');
-var circlesController = require('../controllers/api');
+var circlesController = require('../controllers/circles');
+var apiController     = require('../controllers/api');
+var spotify           = require('../config/spotifyApiHelper');
 
-// root path:
+
+// =============Root Path==============
+// ====================================
 router.get('/', welcomeController.index);
 
-router.post('/circles', circlesController.createCircle);
+// =============API Routes=============
+// ====================================
+router.get('/indexCircle', apiController.indexCircle);
+router.get('/indexCircle/:id', apiController.showCircle);
 
-router.post('/users', circlesController.addCircleUsers);
+router.get('/findCircle', apiController.findCircle);
+router.get('/indexUser', apiController.indexUser);
 
-router.get('/libraries',function(req,res) {
-//  eval(locus);
+// =============App Routes=============
+// ====================================
+router.delete('/circles/:id', circlesController.destroyCircle);
+
+router.post('/circles', isLoggedIn, circlesController.createCircle);
+router.get('/testLib', isLoggedIn, function(req,res) {
+    spotify.buildStation(req.query.disId, req.user.accessToken).
+      then(function(station) {
+        res.json(station);
+        console.log(station);
+      }).
+      then(function(){
+        console.log('hey bu')
+        console.log()
+        res.redirect('/')
+      });
+});
+
+router.get('/libraries', isLoggedIn, function(req, res) {
   var spotify = require('./spotifyApiHelper');
   var Circle = require('../models/circle');
   Circle.find({}, function(err, circles) {
     var libraries = spotify.buildLibraries(circles[0].id, req.user.accessToken);
-    // console.log(libraries);
     res.json(libraries);
   });
 });
 
-// Spotify Login:
+
+// ============Spotify Login===========
+// ====================================
 var generateRandomString = function(length) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -39,6 +65,7 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
+<<<<<<< HEAD
   // router.get('/', function(req,res){
   //   res.render('index', { title: "WELCOME TO BOOMSQUAD!"});
 
@@ -59,6 +86,23 @@ var stateKey = 'spotify_auth_state';
       redirect_uri: 'https://piradio.herokuapp.com/callback',
       state: state
     }));
+=======
+router.get('/login', function(req, res) {
+
+var state = generateRandomString(16);
+res.cookie(stateKey, state);
+
+// your application requests authorization
+var scope = 'user-read-private user-read-email';
+res.redirect('https://accounts.spotify.com/authorize?' +
+  querystring.stringify({
+    response_type: 'code',
+    client_id: process.env.CLIENT_ID,
+    scope: scope,
+    redirect_uri: 'http://localhost:3000/callback',
+    state: state
+  }));
+>>>>>>> 29bc278413d2304eb0d164b3435e0adac2a17fdf
 });
 
 router.get('/auth/spotify',

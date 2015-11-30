@@ -15,19 +15,34 @@ module.exports = function(passport) {
       if (user) {
         debug("OAuth successful, found user: ", user.displayName);
         user.accessToken = accessToken;
-      //  user.save(function(user){
-        return done(null, user);
-    //  })
+
+        if(user.accessToken) {
+          user.save(function(err, user) {
+            if (err) return done(err);
+            return done(null, user);
+          });
+        }
 
       } else {
         debug("OAuth successful, user not found!");
 
+        // var image;
+        // function getImage() {
+        //   if (profile.images.length > 0) {
+        //     image = profile.images[0].url;
+        //   } else {
+        //     image = 'http://www.sessionlogs.com/media/icons/defaultIcon.png'
+        //   }
+        // }
+        // getImage();
+
         var newUser = new User({
-          displayName: profile.displayName || profile.username,
-          email:       profile.emails[0].value,
-          spotifyId:   profile.id,
-          profileImage: profile.images[0].url,
-          circles: []
+          displayName:  profile.displayName || profile.username,
+          email:        profile.emails[0].value,
+          spotifyId:    profile.id,
+          profileImage: null,
+          circles:      [],
+          accessToken:  accessToken
         });
 
         newUser.save(function(err, user) {
