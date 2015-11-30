@@ -2,8 +2,12 @@ console.log('main.js loaded!');
 
 $(document).ready(function() {
 
-  var circles   = _.template($('#circles-template').html()),
-      $destination  = $('main'),
+  var headerName   = _.template($('#headerName-template').html()),
+      circlePrompt   = _.template($('#circlePrompt-template').html()),
+      circle   = _.template($('#circle-template').html()),
+      $headerDestination  = $('#welcome'),
+      $promptDestination  = $('#circlePrompt'),
+      $circleDestination  = $('#circlesList'),
       friendsToAdd = [],
       filteredUsers = [],
       searchName    = '',
@@ -13,7 +17,9 @@ $(document).ready(function() {
   // =============Templating=============
   // ====================================
 
-  $destination.append(circles);
+  $headerDestination.append(headerName);
+  $promptDestination.append(circlePrompt);
+  $circleDestination.append(circle);
   function circleView(){
 
   }
@@ -67,15 +73,17 @@ $(document).ready(function() {
         } else {
           $('#friend').append(foundUser.id);
         }
-        $('#friend').append('<input type="submit" id="addToCircle" value="Add Friend">');
-        $('#addToCircle').on('click', function(){
-              var friend = $('#friend div').html();
-              $('#circleMembers').append('<li class="addedFriend" id="'+foundUser.id+'">'+foundUser.display_name+'</li>');
-              $('#friend').empty();
-          });
+        // $('#friend').append('<input type="submit" id="addToCircle" value="Add Friend">');
       }
     });
   }
+
+  $('#addFriend').on('click', function(){
+    console.log('click');
+    // var friend = $('#friend div').html();
+    $('#friendsToAdd').append('<div class="addedFriend" id="'+foundUser.id+'">'+foundUser.display_name+'</div>');
+    $('#friend').empty();
+  });
 
   $('#search').on('keyup blur', function(evt) {
     var currentSearch = $('#search').val();
@@ -111,7 +119,8 @@ $(document).ready(function() {
 
   $('#circlesList').delegate('.stationLink', 'click', function(evt){
     evt.preventDefault();
-    var id = $(this).attr('id');
+    console.log('click');
+    var id = $(this).attr('data-indexNumber');
     console.log(id);
     $.ajax({
       type: 'GET',
@@ -121,7 +130,7 @@ $(document).ready(function() {
       },
       success: function(data) {
         console.log(data);
-        $('#spotifyPlayer').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '" frameborder="0" allowtransparency="true"></iframe>');
+        $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '" frameborder="0" allowtransparency="true"></iframe>');
       },
       error: function() {
         console.log('herb')
@@ -130,16 +139,76 @@ $(document).ready(function() {
   });
 
   $('#circlesList').delegate('.deleteCircle', 'click', function(evt){
-        var id = $(this).attr('id');
-        $('#' + id).remove();
-        $.ajax({
-          method: 'DELETE',
-          url: '/circles/' + id
-        }).done(function(data) {
-          console.log(data);
-        });
-      });
+    var id = $(this).attr('data-indexNumber');
+    $('#' + id).remove();
+    $.ajax({
+      method: 'DELETE',
+      url: '/circles/' + id
+    }).done(function(data) {
+      console.log(data);
+    });
+  });
 
+  $('#circlesList').delegate('.editCircle', 'click', function(evt){
+    evt.preventDefault();
+    var id = $(this).attr('data-indexNumber');
+    $.ajax({
+      method: 'GET',
+      url: '/updateCircle',
+      dataType: 'json',
+      data: {
+        _id: id
+      },
+      success: function(data) {
+        console.log(data);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.status);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+  });
+
+  $("#logo").on("click", function(e) {
+    e.preventDefault();
+    $("#aboutPiRS").slideToggle();
+  })
+
+  $("#createCircleLink").on("click", function(e) {
+    e.preventDefault();
+    $("#createCircleArea").slideToggle();
+  });
+
+  $(".circleHeader").on('click', function() {
+    var parent = $(this).parent();
+    var circleMembers = $(parent).children(".circleMembers");
+    if (parent.children(".playButton").css("display") === "none"){
+      $(this).children(".playButton").css("display", "inline")
+      $(parent).css({"flex-direction": "column", "height": "100%"});
+      circleMembers.css({"flex-direction": "column"});
+      circleMembers.children(".circleMember").css({"width": "100%", "border": "1px solid black"})
+      circleMembers.children(".currentUser").css({"display": "flex"});
+      circleMembers.children(".circleMember").children(".circleMemberName").css({"display": "inline"});
+      $(parent).children('.deleteCircle').css("display", "inline-block");
+      $(parent).children().css("display", "inline-block");
+      circleMembers.hide();
+      circleMembers.slideToggle(300);
+    } else {
+      circleMembers.slideToggle(300, function() {
+        circleMembers.children(".circleMember").children(".circleMemberName").css({"display": "none"});
+        circleMembers.children(".currentUser").css({"display": ""});
+        circleMembers.children(".circleMember").css({"width": "", "border": ""});
+        circleMembers.css({"flex-direction": ""});
+        $(parent).css({"flex-direction": "", "height": ""})
+        $(this).children(".playButton").css("display", "none");
+        $(parent).children('.deleteCircle').css("display", "none");
+        $(parent).children(".playButton").css("display", "none");
+        circleMembers.css("display", "flex")
+        circleMembers.show();
+      });
+    }
+  });
 });
 
 
