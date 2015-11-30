@@ -19,7 +19,7 @@ _________________________
 ​
 ![JSNode JQuery & Js Express](https://i.imgur.com/W7UeOHv.png) 
 ​
-## Planning/Approach
+##Planning/Approach
 Tasks were delegated and roles were identified as a mutual team decision. The plan consisted of building the core backend framework and functions using the Spotify API and then transitioning to Front End.
 ​
 * Team Roles
@@ -45,7 +45,7 @@ Tasks were delegated and roles were identified as a mutual team decision. The pl
 * Manipulating API to get correct information needed for functionality of the App
 ​
 ​
-## Installation
+##Installation
 ​
 To run the application locally you will need to:
 ​
