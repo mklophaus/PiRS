@@ -27,7 +27,7 @@ var createCircle = function(req, res, done) {
             circle.users.push(foundUser._id);
             circle.save(function(err, circle){
               if (err) return done(err);
-               res.json(circle);
+               // res.json(circle);
             });
           } else {
             // eval(locus);
@@ -50,7 +50,8 @@ var createCircle = function(req, res, done) {
       callback(null, 'two');
     },
     function assignCircles(callback){
-      circle.users.forEach(function(user){
+      var array = circle.users
+      async.each(array, function(user){
         User.findOne({ '_id': user }, function(err, user) {
           if (err) return done(err);
           if (user) {
