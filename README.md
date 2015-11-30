@@ -1,4 +1,4 @@
-#Pi.RS
+#PiRS.fm
 
 Never argue with your friends about who gets to pick the music again! Brought to you by Boom Squad, Pi.RS is a peer to peer music application
 
