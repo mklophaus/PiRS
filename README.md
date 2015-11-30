@@ -55,12 +55,5 @@ To run the application locally you will need to:
     * passport-spotify
 * Create a .env with the client_id and client_secret
 ​
-​
-​
-​
-​
-​
-​
-​
-___________________________
+__________________________
 © Boom Squad - Ben Benjamin, Gev Gharadaghi, Judd Hood, Melissa Wilcox, Mike Klophaus
