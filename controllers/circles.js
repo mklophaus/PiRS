@@ -39,7 +39,7 @@ var createCircle = function(req, res, done) {
             circle.users.push(newUser._id);
             circle.save(function(err, circle){
               if (err) return done(err);
-              res.json(circle);
+            //  res.json(circle);
             });
             newUser.save(function(err, user) {
               if (err) return done(err);
