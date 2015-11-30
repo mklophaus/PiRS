@@ -34,21 +34,21 @@ Tasks were delegated and roles were identified as a mutual team decision. The pl
 ​
 ​
 ##Heroku/Website
-[Pi Radio](www.pirs.fm)
+[Pi Radio](http://www.pirs.fm)
 ​
+
 ##Model/Wireframes
 [Model/Wireframe](http://rydr79.axshare.com/#p=login)
 ​
+
 ##Challenges
 * Using an unfamiliar Oauth
 * Managing workload and Github pull/push requests
 * Manipulating API to get correct information needed for functionality of the App
-​
-​
+
+
 ##Installation
-​
 To run the application locally you will need to:
-​
 * Run npm install
 * Run npm install for these additional items:
     * node-sass-middleware (install globally with "-g")
@@ -64,6 +64,6 @@ To run the application locally you will need to:
 ​
 ​
 ​
-___
-​
+
+
 © Boom Squad - Ben Benjamin, Gev Gharadaghi, Judd Hood, Melissa Wilcox, Mike Klophaus
