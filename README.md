@@ -1,23 +1,64 @@
-#PiRS.fm
+<p align="center">
+![PiRS Logo](https://i.imgur.com/E5WguAz.png =100x100) 
+</p>
+
+<h1 align="center">PiRS.fm</h1>
 ​
 Never argue with your friends about who gets to pick the music again! Brought to you by Boom Squad, Pi.RS is a peer to peer music application
 ​
 Simply log in with your Spotify Account, add your friends, and we will generate a radio based on your and your friends Spotify playlists!
 ​
-​
+​_________________________
+
 ##Technologies Used
 
-* API/OAuth 
-    * Spotify - A spotify account with a playlist of a minimum of 10 songs is needed to use this App
-​
+Development | APIs | Deplployment
+------------|------|-------------
+HTML | Spotify | Heroku
+CSS | | MongoLab
+JavaScript/jQuery |
+Node.js |
+Express |
+Passport |
+MongoDB |
+Underscore |
+
+##API Documentation
+
+Method | Parameters | Description | Exposed
+-------------|------|-----------|-------
+`indexCircle` | `/indexCircle` | displays all circles in the database | Yes
+`showCircle` | `/indexCircle/:id` | finds a circle by an id | Yes
+`indexUser` | `/indexUser` | displays all users in the database | No
+`displayCircleUsers` | `/circleUsers/:id` | displays all users for a circle id | No
+
+
 _________________________
 ​
-* JS Node/JS Express 
-* JQuery
-* MongoDB
-* GitHub
-* Heroku
-​
+### USER MODEL
+
+Parameters  | Value | Description | Example
+----------- | ------ | ---------- | --------
+displayName | String | Spotify Display Name | "Melissa Wilcox"
+email | String | Email Registered with Spotify | email@email.com
+spotifyId | String | Spotify User Name to Sign in | "mwilcox" 
+profileImage | String | URL to Spotify User profile pic | http//:image/yourprofilepic
+created | { type: Date, default: Date.now } | Date/Time user was created | 2015-11-30T18:20:31.240Z
+accessToken | String | Token used from Spotify Oauth/Passport | 
+circles | Array | Circle objects that user belongs to | [{ circleModel },  { circleModel }]
+  
+
+### CIRCLE MODEL
+
+
+Parameters  | Value | Description | Example
+----------- | ------ | ---------- | --------
+​title | String | name of circle created | Boom Squad 
+creator | {type: Schema.Types.ObjectId, ref: 'User'} | User ID who created the circle | 
+created | { type: Date, default: Date.now } | Date/Time circle was created | 2015-11-30T18:20:31.240Z | 
+users | [{type: Schema.Types.ObjectId, ref: 'User'}] | User IDs of Users who are a part of the circle 
+
+
 ![JSNode JQuery & Js Express](https://i.imgur.com/W7UeOHv.png) 
 ​
 ##Planning/Approach
