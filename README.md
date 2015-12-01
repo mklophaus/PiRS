@@ -1,5 +1,5 @@
 <p align="center">
-![PiRS Logo](https://i.imgur.com/E5WguAz.png =100x100) 
+<img src="https://i.imgur.com/E5WguAz.png" width="175px" />
 </p>
 
 <h1 align="center">PiRS.fm</h1>
