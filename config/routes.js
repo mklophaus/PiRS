@@ -19,14 +19,14 @@ router.get('/', welcomeController.index);
 // ====================================
 router.get('/indexCircle', apiController.indexCircle);
 router.get('/indexCircle/:id', apiController.showCircle);
-router.get('/circleUsers', apiController.displayCircleUsers);
+router.get('/circleUsers', isLoggedIn, apiController.displayCircleUsers);
 router.get('/findCircle', apiController.findCircle);
-router.get('/indexUser', apiController.indexUser);
+router.get('/indexUser', isLoggedIn, apiController.indexUser);
 
 // =============App Routes=============
 // ====================================
-router.delete('/circles/:id', circlesController.destroyCircle);
-router.get('/updateCircle', circlesController.updateCircle);
+router.delete('/circles/:id', isLoggedIn, circlesController.destroyCircle);
+router.get('/updateCircle', isLoggedIn, circlesController.updateCircle);
 router.post('/circles', isLoggedIn, circlesController.createCircle);
 router.get('/testLib', isLoggedIn, function(req,res) {
     spotify.buildStation(req.query.disId, req.user.accessToken).
