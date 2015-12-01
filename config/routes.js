@@ -97,7 +97,7 @@ router.get('/callback',
     res.redirect('/');
 });
 
-router.get('/logout', function(req, res){
+router.get('/logout', isLoggedIn, function(req, res){
   req.logout();
   res.redirect('/');
 });
