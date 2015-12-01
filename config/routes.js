@@ -20,7 +20,6 @@ router.get('/', welcomeController.index);
 router.get('/indexCircle', apiController.indexCircle);
 router.get('/indexCircle/:id', apiController.showCircle);
 router.get('/circleUsers/:id', isLoggedIn, apiController.displayCircleUsers);
-router.get('/findCircle', apiController.findCircle);
 router.get('/indexUser', isLoggedIn, apiController.indexUser);
 
 // =============App Routes=============
