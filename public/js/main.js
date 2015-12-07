@@ -186,63 +186,92 @@ $(document).ready(function() {
     });
   });
 
-  $("#logo").on("click", function(e) {
-    e.preventDefault();
-    $("#aboutPiRS").slideToggle();
-  })
-
   $("#createCircleLink").on("click", function(e) {
     e.preventDefault();
-    $("#createCircleArea").slideToggle();
+    $("#createCircleArea").slideToggle(300);
   });
 
   $(".circleHeader").on('click', function() {
     var parent = $(this).parent();
     var circleMembers = $(parent).children(".circleMembers");
-    if (parent.children(".playButton").css("display") === "none"){
-      $(this).children(".playButton").css("display", "inline")
-      $(parent).css({"flex-direction": "column", "height": "100%"});
-      circleMembers.css({"flex-direction": "column"});
-      circleMembers.children(".circleMember").css({"width": "100%", "border": "1px solid black"})
-      circleMembers.children(".currentUser").css({"display": "flex"});
-      circleMembers.children(".circleMember").children(".circleMemberName").css({"display": "inline"});
-      circleMembers.children(".circleMember").children(".circleMemberDelete").css("visibility", "visible");
-      $(parent).children('.deleteCircle').css("display", "inline-block");
-      $(parent).children().css("display", "inline-block");
+    var circleMembersExpanded = $(parent).children(".circleMembersExpanded");
+    var playButtonAppearance = parent.children(".playButton").css("display");
+    if (playButtonAppearance === "none"){
       circleMembers.hide();
-      circleMembers.slideToggle(300);
+      parent.css("flex-direction", "column");
+      parent.children(".playButton").css("display", "block");
+      playButtonAppearance = "inline-block";
+      circleMembersExpanded.slideToggle(300);
     } else {
-      circleMembers.slideToggle(300, function() {
-        circleMembers.children(".circleMember").children(".circleMemberName").css({"display": "none"});
-        circleMembers.children(".currentUser").css({"display": ""});
-        circleMembers.children(".circleMember").css({"width": "", "border": ""});
-        circleMembers.css({"flex-direction": ""});
-        $(parent).css({"flex-direction": "", "height": ""})
-        $(this).children(".playButton").css("display", "none");
-        $(parent).children('.deleteCircle').css("display", "none");
-        $(parent).children(".playButton").css("display", "none");
-        circleMembers.css("display", "flex")
+      circleMembersExpanded.slideToggle(300, function() {
+        parent.children(".playButton").css("display", "none");
+        parent.css("flex-direction", "row");
         circleMembers.show();
       });
     }
   });
 
-  // $(".playButton").on('click', function() {
-  //   // console.log($("main"))
+  $('.deleteCircle').mouseover(function() {
+    $(this).find("img").fadeOut(50);
+  }).mouseout(function() {
+    $(this).find("img").fadeIn(50);
+  });
 
-  //   $("iframe").remove()
+  $('#userName p').on('click', function() {
+    console.log('click');
+    $("#userMenu").css("display", "flex");
+    $("#userMenu").animate({right: 0}, 300);
+  });
 
-  //   $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
-  //   // $spotifyPlayer.append($("main"));
-  //   function respondify() {
-  //   $('iframe[src*="embed.spotify.com"]').each( function() {
-  //     $(this).css('width',$(this).parent(3).css('width'));
-  //     $(this).attr('src',$(this).attr('src'));
-  //   });
+  $('#userMenu button').on('click', function() {
+    $('#userMenu').animate({right: "100%"}, 300, function() {
+      $("#userMenu").hide();
+    });
+  });
 
-  //   respondify();
+  $('#moreInfo p').on('click', function() {
+    console.log('clack')
+    $("#moreInfoMenu").css("display", "flex");
+    $("#moreInfoMenu").animate({left: 0}, 300);
+  });
+
+  $('#moreInfoMenu button').on('click', function() {
+    $('#moreInfoMenu').animate({left: "100%"}, 300, function(){
+    $("#moreInfoMenu").hide();
+    });
+  });
+
+  var showModal = function() {
+    $("#modal").fadeIn(300);
+  };
+
+  $("#logo").on("click", function() {
+    console.log("yee");
+    showModal();
+  });
+
+  $("#content").on("click", function() {
+    if ($("#modal").css("display") != "none") {
+      $("#modal").fadeOut(300);
+    }
+  });
+
+  // $('.exitMenu').on('click', function() {
+  //   $(this).parent().animate({left: 100%}, 200);
+  // });
+
+
+  // var right = function(thing) {
+  //   return thing.offset().right;
   // }
-  // })
+
+  // var left = function(thing) {
+  //   return thing.offset().left;
+  // }
+
+  // $('#username').on('click', function() {
+  //   $('#userMenu').css({left:left($('#userMenu'))}).animate({left: '0px'})
+  // });
 
 });
 
