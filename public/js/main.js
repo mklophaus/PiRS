@@ -125,7 +125,7 @@ $(document).ready(function() {
     evt.preventDefault();
     console.log('click');
     targettedPlayButton = evt.target;
-    targettedPlayButton.src = "https://i.imgur.com/IZLXD4p.gif";
+    targettedPlayButton.src = "http://emdubb.co/ring-alt.svg";
     var id = $(this).attr('data-indexNumber');
     console.log(id);
     $.ajax({
@@ -257,5 +257,3 @@ $(document).ready(function() {
   });
 
 });
-
-

@@ -57,6 +57,8 @@ h1 {
   justify-content: space-between;
   font-size: 1.5em;
   position: relative;
+  box-shadow: 0 0 1.2vw #171717;
+  z-index: 20000;
 }
 
 #topHeader div {
@@ -177,7 +179,7 @@ h1 {
   flex-direction: column;
   justify-content: space-around;
   background: #dcddde;
-  box-shadow: 0 0 1.2vw #171717;
+  box-shadow: 0 .3vw 1.2vw #171717;
   z-index: 10000;
 }
 
@@ -341,7 +343,6 @@ button:hover {
 
 .circleMember {
   display: flex;
-  margin-right: .5vw;
   position: relative;
 }
 
@@ -374,7 +375,7 @@ button:hover {
   min-width: 40px;
   border: 1px solid black;
   border-radius: 50%;
-  margin: 1vw 10px;
+  margin: 1vw;
 }
 
 .circleMemberImage img {
