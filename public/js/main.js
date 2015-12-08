@@ -147,7 +147,7 @@ $(document).ready(function() {
             $(this).attr('src',$(this).attr('src'));
           });
         }
-        respondify();
+        // respondify();
         targettedPlayButton.src = "https://i.imgur.com/ODkyHmb.png";
       },
       error: function() {

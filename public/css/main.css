@@ -148,7 +148,6 @@ h1 {
 #moreInfo {
   position: relative;
   width: 30vw;
-
 }
 
 #moreInfo:hover {
@@ -178,6 +177,7 @@ h1 {
   flex-direction: column;
   justify-content: space-around;
   background: #dcddde;
+  box-shadow: 0 0 1.2vw #171717;
   z-index: 10000;
 }
 
