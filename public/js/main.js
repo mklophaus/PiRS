@@ -124,6 +124,8 @@ $(document).ready(function() {
   $('#circlesList').delegate('.stationLink', 'click', function(evt){
     evt.preventDefault();
     console.log('click');
+    targettedPlayButton = evt.target;
+    targettedPlayButton.src = "https://i.imgur.com/IZLXD4p.gif";
     var id = $(this).attr('data-indexNumber');
     console.log(id);
     $.ajax({
@@ -134,22 +136,25 @@ $(document).ready(function() {
       },
       success: function(data) {
         console.log(data);
-        // $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
-          $("iframe").remove()
 
-          $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
-          // $spotifyPlayer.append($("main"));
-          function respondify() {
+        $("iframe").remove()
+
+        $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
+        console.log(targettedPlayButton.src);
+        function respondify() {
           $('iframe[src*="embed.spotify.com"]').each( function() {
             $(this).css('width',$(this).parent(3).css('width'));
             $(this).attr('src',$(this).attr('src'));
           });
-
-          respondify();
         }
+        respondify();
+        targettedPlayButton.src = "https://i.imgur.com/ODkyHmb.png";
       },
       error: function() {
-        console.log('herb')
+        console.log('herb');
+        var errorMessage = "Yo.. your ish is ucked. please try again!";
+        $("#modal").text(errorMessage).css("color", "black").fadeIn(300);
+        targettedPlayButton.src = "https://i.imgur.com/ODkyHmb.png";
       }
     });
   });
@@ -255,23 +260,6 @@ $(document).ready(function() {
       $("#modal").fadeOut(300);
     }
   });
-
-  // $('.exitMenu').on('click', function() {
-  //   $(this).parent().animate({left: 100%}, 200);
-  // });
-
-
-  // var right = function(thing) {
-  //   return thing.offset().right;
-  // }
-
-  // var left = function(thing) {
-  //   return thing.offset().left;
-  // }
-
-  // $('#username').on('click', function() {
-  //   $('#userMenu').css({left:left($('#userMenu'))}).animate({left: '0px'})
-  // });
 
 });
 

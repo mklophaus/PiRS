@@ -247,10 +247,6 @@ button:hover {
   background-color: #1e4761;
 }
 
-#addFriend {
-
-}
-
 #friendsToAdd {
   display: flex;
   flex-direction: row;
