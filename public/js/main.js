@@ -222,27 +222,22 @@ $(document).ready(function() {
     $(this).find("img").fadeIn(50);
   });
 
-  $('#userName p').on('click', function() {
-    console.log('click');
-    $("#userMenu").css("display", "flex");
-    $("#userMenu").animate({right: 0}, 300);
-  });
-
-  $('#userMenu button').on('click', function() {
-    $('#userMenu').animate({right: "100%"}, 300, function() {
-      $("#userMenu").hide();
+  $('#whereAmI').on('click', function() {
+    console.log('clack')
+    $("#moreInfoMenu").slideToggle();
+    $("#moreInfoMenu").css("display", "flex");
+    $("#whereAmI").fadeOut(150, function() {
+      $("#gotIt").fadeIn(150);
     });
   });
 
-  $('#moreInfo p').on('click', function() {
-    console.log('clack')
-    $("#moreInfoMenu").css("display", "flex");
-    $("#moreInfoMenu").animate({left: 0}, 300);
-  });
-
-  $('#moreInfoMenu button').on('click', function() {
+  $('#gotIt').on('click', function() {
+    $("#gotIt").fadeOut(150, function() {
+      $("#whereAmI").fadeIn(150);
+    });
     $('#moreInfoMenu').animate({left: "100%"}, 300, function(){
     $("#moreInfoMenu").hide();
+    $("#moreInfoMenu").css("left", "");
     });
   });
 
