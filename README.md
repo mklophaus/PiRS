@@ -8,9 +8,18 @@ Never argue with your friends about who gets to pick the music again! Brought to
 ​
 Simply log in with your Spotify Account, add your friends, and we will generate a radio based on your and your friends Spotify playlists!
 ​
-​_________________________
+## Installation
 
-##Technologies Used
+To run the application locally you will need to:
+​
+* Run `npm install` for these additional items:
+    * node-sass-middleware (install globally with "-g")
+    * express-session
+    * passport
+    * passport-spotify
+* Create a `.env` with the `client_id` and `client_secret`
+
+## Technologies Used
 
 Development | APIs | Deplployment
 ------------|------|-------------
@@ -62,7 +71,7 @@ users | [{type: Schema.Types.ObjectId, ref: 'User'}] | User IDs of Users who are
 ![JSNode JQuery & Js Express](https://i.imgur.com/W7UeOHv.png) 
 
 
-##Planning/Approach
+## Planning/Approach
 
 Tasks were delegated and roles were identified as a mutual team decision. The plan consisted of building the core backend framework and functions using the Spotify API and then transitioning to Front End.
 ​
@@ -73,70 +82,20 @@ Tasks were delegated and roles were identified as a mutual team decision. The pl
     * Agile Manager - Gev Gharadaghi
     * VC/Project Manager - Judd Hood
  
-##Trello
+#### Trello
 
 [BoomSquad - PiRS](https://trello.com/b/MC17o7Zr/pi-rs)
 ​
-​
-##Heroku/Website
-
-[Pi Radio](http://www.pirs.fm)
-​
-
-##Model/Wireframes
+#### Model/Wireframes
 
 [Model/Wireframe](http://rydr79.axshare.com/#p=login)
 ​
-
-##Challenges
+#### Challenges
 
 * Using an unfamiliar Oauth
 * Managing workload and Github pull/push requests
 * Manipulating API to get correct information needed for functionality of the App
 
-
-##Installation
-
-To run the application locally you will need to:
-
-[BoomSquad - PiRS](https://trello.com/b/MC17o7Zr/pi-rs)
-​
-​
-##Heroku/Website
-
-[Pi Radio](www.pirs.fm)
-
-​
-##Model/Wireframes
-
-[Model/Wireframe](http://rydr79.axshare.com/#p=login)
-​
-##Challenges
-
-* Using an unfamiliar Oauth
-* Managing workload and Github pull/push requests
-* Manipulating API to get correct information needed for functionality of the App
-​
-​
-## Installation
-​ 
-To run the application locally you will need to:
-​
-* Run npm install
-* Run npm install for these additional items:
-    * node-sass-middleware (install globally with "-g")
-    * express-session
-    * passport
-    * passport-spotify
-* Create a .env with the client_id and client_secret
-​
-​
-​
-​
-​
-​
-​
-​
 ___
 ​
 © Boom Squad - Ben Benjamin, Gev Gharadaghi, Judd Hood, Melissa Wilcox, Mike Klophaus
