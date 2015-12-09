@@ -124,6 +124,8 @@ $(document).ready(function() {
   $('#circlesList').delegate('.stationLink', 'click', function(evt){
     evt.preventDefault();
     console.log('click');
+    targettedPlayButton = evt.target;
+    targettedPlayButton.src = "http://emdubb.co/ring-alt.svg";
     var id = $(this).attr('data-indexNumber');
     console.log(id);
     $.ajax({
@@ -134,22 +136,25 @@ $(document).ready(function() {
       },
       success: function(data) {
         console.log(data);
-        // $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
-          $("iframe").remove()
 
-          $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
-          // $spotifyPlayer.append($("main"));
-          function respondify() {
+        $("iframe").remove()
+
+        $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
+        console.log(targettedPlayButton.src);
+        function respondify() {
           $('iframe[src*="embed.spotify.com"]').each( function() {
             $(this).css('width',$(this).parent(3).css('width'));
             $(this).attr('src',$(this).attr('src'));
           });
-
-          respondify();
         }
+        // respondify();
+        targettedPlayButton.src = "https://i.imgur.com/ODkyHmb.png";
       },
       error: function() {
-        console.log('herb')
+        console.log('herb');
+        var errorMessage = "Yo.. your ish is ucked. please try again!";
+        $("#modal").text(errorMessage).css("color", "black").fadeIn(300);
+        targettedPlayButton.src = "https://i.imgur.com/ODkyHmb.png";
       }
     });
   });
@@ -186,64 +191,69 @@ $(document).ready(function() {
     });
   });
 
-  $("#logo").on("click", function(e) {
-    e.preventDefault();
-    $("#aboutPiRS").slideToggle();
-  })
-
   $("#createCircleLink").on("click", function(e) {
     e.preventDefault();
-    $("#createCircleArea").slideToggle();
+    $("#createCircleArea").slideToggle(300);
   });
 
   $(".circleHeader").on('click', function() {
     var parent = $(this).parent();
     var circleMembers = $(parent).children(".circleMembers");
-    if (parent.children(".playButton").css("display") === "none"){
-      $(this).children(".playButton").css("display", "inline")
-      $(parent).css({"flex-direction": "column", "height": "100%"});
-      circleMembers.css({"flex-direction": "column"});
-      circleMembers.children(".circleMember").css({"width": "100%", "border": "1px solid black"})
-      circleMembers.children(".currentUser").css({"display": "flex"});
-      circleMembers.children(".circleMember").children(".circleMemberName").css({"display": "inline"});
-      circleMembers.children(".circleMember").children(".circleMemberDelete").css("visibility", "visible");
-      $(parent).children('.deleteCircle').css("display", "inline-block");
-      $(parent).children().css("display", "inline-block");
+    var circleMembersExpanded = $(parent).children(".circleMembersExpanded");
+    var playButtonAppearance = parent.children(".playButton").css("display");
+    if (playButtonAppearance === "none"){
       circleMembers.hide();
-      circleMembers.slideToggle(300);
+      parent.css("flex-direction", "column");
+      parent.children(".playButton").css("display", "block");
+      playButtonAppearance = "inline-block";
+      circleMembersExpanded.slideToggle(300);
     } else {
-      circleMembers.slideToggle(300, function() {
-        circleMembers.children(".circleMember").children(".circleMemberName").css({"display": "none"});
-        circleMembers.children(".currentUser").css({"display": ""});
-        circleMembers.children(".circleMember").css({"width": "", "border": ""});
-        circleMembers.css({"flex-direction": ""});
-        $(parent).css({"flex-direction": "", "height": ""})
-        $(this).children(".playButton").css("display", "none");
-        $(parent).children('.deleteCircle').css("display", "none");
-        $(parent).children(".playButton").css("display", "none");
-        circleMembers.css("display", "flex")
+      circleMembersExpanded.slideToggle(300, function() {
+        parent.children(".playButton").css("display", "none");
+        parent.css("flex-direction", "row");
         circleMembers.show();
       });
     }
   });
 
-  // $(".playButton").on('click', function() {
-  //   // console.log($("main"))
+  $('.deleteCircle').mouseover(function() {
+    $(this).find("img").fadeOut(50);
+  }).mouseout(function() {
+    $(this).find("img").fadeIn(50);
+  });
 
-  //   $("iframe").remove()
+  $('#whereAmI').on('click', function() {
+    console.log('clack')
+    $("#moreInfoMenu").slideToggle();
+    $("#moreInfoMenu").css("display", "flex");
+    $("#whereAmI").fadeOut(150, function() {
+      $("#gotIt").fadeIn(150);
+    });
+  });
 
-  //   $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
-  //   // $spotifyPlayer.append($("main"));
-  //   function respondify() {
-  //   $('iframe[src*="embed.spotify.com"]').each( function() {
-  //     $(this).css('width',$(this).parent(3).css('width'));
-  //     $(this).attr('src',$(this).attr('src'));
-  //   });
+  $('#gotIt').on('click', function() {
+    $("#gotIt").fadeOut(150, function() {
+      $("#whereAmI").fadeIn(150);
+    });
+    $('#moreInfoMenu').animate({left: "100%"}, 300, function(){
+    $("#moreInfoMenu").hide();
+    $("#moreInfoMenu").css("left", "");
+    });
+  });
 
-  //   respondify();
-  // }
-  // })
+  var showModal = function() {
+    $("#modal").fadeIn(300);
+  };
+
+  $("#logo").on("click", function() {
+    console.log("yee");
+    showModal();
+  });
+
+  $("#content").on("click", function() {
+    if ($("#modal").css("display") != "none") {
+      $("#modal").fadeOut(300);
+    }
+  });
 
 });
-
-
