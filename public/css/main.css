@@ -254,7 +254,7 @@ button {
   height: 8vh;
   width: 10vw;
   min-width: 60px;
-  background-color: #0387a4;
+  background: #0387a4;
   color: #dcddde;
   border: none;
   font-family: 'Roboto Condensed', 'Helvetica', 'Arial', sans-serif;
@@ -266,7 +266,7 @@ button {
 }
 
 button:hover {
-  background-color: #1e4761;
+  background: #1e4761;
 }
 
 #friendsToAdd {
