@@ -10,7 +10,7 @@ body {
   display: flex;
   height: 100%;
   margin: 0;
-  font-family: 'Roboto Condensed', 'Helvetica', 'Arial', sans-serif;
+  font-family: "proxima-nova", sans-serif;
   background: #181818;
   color: #dcddde;
 }
@@ -92,7 +92,7 @@ h1 {
   justify-content: center;
   color: #dcddde;
   background: #272727;
-  -webkit-transition: color ..05s ease-in;
+  -webkit-transition: color .05s ease-in;
   transition: color .05s ease-in;
 }
 
