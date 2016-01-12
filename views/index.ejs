@@ -12,20 +12,20 @@
     <div id="topHeader" class="header">
       <div id="welcome">
         <script type="text/template" id="headerName-template">
-          <div id="userName"><p><%= user.spotifyId %></p></div>
+          <p><%= user.spotifyId %></p>
         </script>
       </div>
       <div id="logoContainer"><img id="logo" src="https://i.imgur.com/E5WguAz.png"></div>
       <div id="moreInfo">
         <p id="whereAmI">where am I?</p>
         <p id="gotIt">got it.</p>
-        <span id="moreInfoMenu">
-          <span class="menuItem" id="aboutPirs"><p>PiRS</p></span>
-          <span class="menuItem" id="legal"><p>legal</p></span>
-          <span class="menuItem" id="contact"><p>contact</p></span>
-          <span class="menuItem" id="settings"><p>settings</p></span>
-          <span class="menuItem" id="logout"><p><a href="/logout">logout</a></p></span>
-        </span>
+        <div id="moreInfoMenu">
+          <div class="menuItem" id="aboutPirs"><p>PiRS</p></div>
+          <div class="menuItem" id="legal"><p>legal</p></div>
+          <div class="menuItem" id="contact"><p>contact</p></div>
+          <div class="menuItem" id="settings"><p>settings</p></div>
+          <div class="menuItem" id="logout"><p><a href="/logout">logout</a></p></div>
+        </div>
       </div>
       <section id="modal">
 

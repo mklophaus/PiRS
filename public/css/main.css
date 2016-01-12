@@ -10,7 +10,7 @@ body {
   display: flex;
   height: 100%;
   margin: 0;
-  font-family: 'Roboto Condensed', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'proxima-nova', 'Helvetica', 'Arial', sans-serif;
   background: #181818;
   color: #dcddde;
 }
@@ -54,18 +54,22 @@ h1 {
 #topHeader {
   height: 80px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   font-size: 1.5em;
   position: relative;
+  background: #272727;
   box-shadow: 0 0 1.2vw #171717;
   z-index: 20000;
 }
 
-#topHeader div {
-  display: inline-block;
-  flex-grow: 1;
-  background: #272727;
+#topHeader > div {
+  display: flex;
   text-align: center;
+  flex-grow: 1;
+}
+
+#topHeader img, #topHeader p {
+  margin: auto;
 }
 
 #modal {
@@ -102,6 +106,7 @@ h1 {
   background: #272727;
   -webkit-transition: color ..05s ease-in;
   transition: color .05s ease-in;
+  height: 80px;
 }
 
 .menuItem:hover {
@@ -119,18 +124,11 @@ h1 {
   display: flex;
 }
 
-#userName {
-  margin: 0;
-  width: 100%;
-  font-weight: 700;
-}
-
-#userName p {
-}
-
 #welcome {
   position: relative;
   width: 30vw;
+  font-weight: 700;
+
 }
 
 #userMenu {
@@ -150,9 +148,8 @@ h1 {
 
 #logo {
   cursor: pointer;
-  height: 70px;
+  height: 90%;
   margin: auto;
-  margin-top: 5px
 }
 
 #moreInfo {
@@ -170,17 +167,13 @@ h1 {
   cursor: pointer;
 }
 
-#whereAmI {
-
-}
-
 #gotIt {
   display: none;
 }
 
 #moreInfoMenu {
   position: absolute;
-  right: 0;
+  right: 0px;
   top: 80px;
   width: 100%;
   display: none;
@@ -193,6 +186,28 @@ h1 {
 
 #moreInfoMenu button {
   bottom: 0;
+}
+
+@media only screen and (max-device-width: 400px) {
+
+  #login {
+    font-size: 2.5em
+  }
+  #login img {
+    width: 60vw;
+  }
+
+  #topHeader, #topHeader > div {
+    height: 8vh;
+  }
+
+  #moreInfoMenu {
+    top: 7.5vh;
+  }
+  .menuItem {
+    height: 80px;
+  }
+
 }
 
 #circleHead {
@@ -452,6 +467,7 @@ button:hover {
 
 #login {
   text-align: center;
+  font-size: 1.5em;
 }
 
 #login img {
@@ -465,12 +481,15 @@ button:hover {
 }
 
 iframe {
-  /*width: 100vw;*/
-  flex-grow: 4;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 #savePlaylist {
-  flex-grow: 1;
+  max-width: 150px;
+  min-width: 100px;
   height: 80px;
   background: #0387a4;
   cursor: pointer;

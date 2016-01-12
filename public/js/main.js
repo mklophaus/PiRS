@@ -123,7 +123,6 @@ $(document).ready(function() {
 
   $('#circlesList').delegate('.stationLink', 'click', function(evt){
     evt.preventDefault();
-    console.log('click');
     targettedPlayButton = evt.target;
     targettedPlayButton.src = "http://emdubb.co/ring-alt.svg";
     var id = $(this).attr('data-indexNumber');
@@ -181,7 +180,8 @@ $(document).ready(function() {
           tracks: parseTrackIDs($(this).attr('data-trackids'))
         },
         success: function(data) {
-          console.log('yeppp');
+          console.log('Playlist posted to Spotify');
+          $("#savePlaylist").prop("disabled", true);
         },
         error: function(err) {
           console.log(err);
@@ -198,16 +198,6 @@ $(document).ready(function() {
     console.log(trackCats)
     return trackCats
   }
-  // $("#savePlaylist").on('click', function(e){
-
-  //   console.log("batters");
-  //   console.log(user);
-  //   // var id = $(this).attr('data-indexNumber');
-  //   // console.log(id);
-  // });
-
-  // $("#playlistDest").css("background", "blue");
-  // console.log($("#playlistDest"));
 
   $('#circlesList').delegate('.deleteCircle', 'click', function(evt){
     var id = $(this).attr('data-indexNumber');
