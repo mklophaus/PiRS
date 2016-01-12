@@ -127,7 +127,8 @@ $(document).ready(function() {
     targettedPlayButton = evt.target;
     targettedPlayButton.src = "http://emdubb.co/ring-alt.svg";
     var id = $(this).attr('data-indexNumber');
-    console.log(id);
+    var title = $(this).attr('data-title');
+    console.log(title);
     $.ajax({
       type: 'GET',
       url: '/testLib',
@@ -137,10 +138,15 @@ $(document).ready(function() {
       success: function(data) {
         console.log(data);
 
-        $("iframe").remove()
+        $("#playlistDest").remove()
 
-        $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
+        $('main').append('<div id="playlistDest"><iframe src="https://embed.spotify.com/?uri=spotify:trackset:'+ title +':' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe><button id="savePlaylist" data-title="' + title + '" data-trackids="' + data + '">save<br>playlist</button></div>');
+
+        // SAVE IFRAME TO LOCAL STORAGE!!!
+
         console.log(targettedPlayButton.src);
+        addClickToSave();
+
         function respondify() {
           $('iframe[src*="embed.spotify.com"]').each( function() {
             $(this).css('width',$(this).parent(3).css('width'));
@@ -158,6 +164,50 @@ $(document).ready(function() {
       }
     });
   });
+
+  function addClickToSave() {
+    $("#savePlaylist").on('click', function(e){
+
+      var playlistName = $(this).attr('data-title');
+
+      var modalHtml = '<strong>Playlist "' + $(this).attr('data-title') + '" saved to Spotify!</strong><br>(you might need to restart Spotify)<br><a href="spotify:playlist:'+ playlistName +' id="openSpotifyButton">Open Spotify</a>';
+      showModal(modalHtml);
+
+      $.ajax({
+        type: 'GET',
+        url: '/postPlaylist',
+        data: {
+          title: playlistName,
+          tracks: parseTrackIDs($(this).attr('data-trackids'))
+        },
+        success: function(data) {
+          console.log('yeppp');
+        },
+        error: function(err) {
+          console.log(err);
+      }
+    });
+  });
+  }
+
+  function parseTrackIDs(tracks) {
+    var trackSplits = tracks.split(",");
+    var trackCats = trackSplits.map(function(track) {
+      return("spotify:track:" + track)
+    });
+    console.log(trackCats)
+    return trackCats
+  }
+  // $("#savePlaylist").on('click', function(e){
+
+  //   console.log("batters");
+  //   console.log(user);
+  //   // var id = $(this).attr('data-indexNumber');
+  //   // console.log(id);
+  // });
+
+  // $("#playlistDest").css("background", "blue");
+  // console.log($("#playlistDest"));
 
   $('#circlesList').delegate('.deleteCircle', 'click', function(evt){
     var id = $(this).attr('data-indexNumber');
@@ -241,8 +291,9 @@ $(document).ready(function() {
     });
   });
 
-  var showModal = function() {
+  var showModal = function(HTML) {
     $("#modal").fadeIn(300);
+    $("#modal").html(HTML)
   };
 
   $("#logo").on("click", function() {

@@ -10,7 +10,7 @@ body {
   display: flex;
   height: 100%;
   margin: 0;
-  font-family: "proxima-nova", sans-serif;
+  font-family: 'Roboto Condensed', 'Helvetica', 'Arial', sans-serif;
   background: #181818;
   color: #dcddde;
 }
@@ -83,6 +83,14 @@ h1 {
   top: 12vh;
   border-radius: 6px;
   box-shadow: 0 0 1.2vw #171717;
+  color: #171717;
+  font-size: 20px;
+  text-align: center
+}
+
+#openSpotifyButton {
+  margin-top: 50px;
+  width: 50%;
 }
 
 .menuItem {
@@ -92,7 +100,7 @@ h1 {
   justify-content: center;
   color: #dcddde;
   background: #272727;
-  -webkit-transition: color .05s ease-in;
+  -webkit-transition: color ..05s ease-in;
   transition: color .05s ease-in;
 }
 
@@ -451,3 +459,25 @@ button:hover {
   width: 380px;
 }
 
+#playlistDest {
+  display: flex;
+  position: relative;
+}
+
+iframe {
+  /*width: 100vw;*/
+  flex-grow: 4;
+}
+
+#savePlaylist {
+  flex-grow: 1;
+  height: 80px;
+  background: #0387a4;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+#savePlaylist:hover {
+  background: #1e4761;
+}
