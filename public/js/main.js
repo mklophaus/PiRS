@@ -263,8 +263,7 @@ $(document).ready(function() {
   });
 
   $('#whereAmI').on('click', function() {
-    console.log('clack')
-    $("#moreInfoMenu").slideToggle();
+    $("#moreInfoMenu").slideToggle(300);
     $("#moreInfoMenu").css("display", "flex");
     $("#whereAmI").fadeOut(150, function() {
       $("#gotIt").fadeIn(150);

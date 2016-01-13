@@ -159,6 +159,7 @@ ul {
   background: #272727;
   -webkit-transition: color .05s ease-in;
           transition: color .05s ease-in;
+  min-height: 80px;
   height: 80px;
 }
 
@@ -525,15 +526,16 @@ button:hover {
   border: 1px solid black;
   border-radius: 50%;
   margin: 1vw;
-}
-
-.circleMemberImage img {
   height: 8vw;
   width: 8vw;
   max-height: 80px;
   max-width: 80px;
   min-height: 40px;
   min-width: 40px;
+}
+
+.circleMemberImage img {
+
 }
 
 .circleMemberName {
