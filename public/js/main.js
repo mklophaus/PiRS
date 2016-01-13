@@ -117,7 +117,7 @@ $(document).ready(function() {
         console.log(errorThrown);
       }
     });
-      render();
+      // render();
   });
 
 

@@ -20,8 +20,9 @@ var index = function(req, res, next) {
         }
     })
   })
-  } else {
-    res.render('./index', { user: req.user, userCircles: allUserCircles });
+  }
+  else {
+    res.render('./index', { user: req.user });
   }
 }
 
