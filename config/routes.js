@@ -7,6 +7,7 @@ var express     = require('express'),
 // Require controllers.
 var welcomeController = require('../controllers/welcome');
 var circlesController = require('../controllers/circles');
+var usersController   = require('../controllers/users');
 var apiController     = require('../controllers/api');
 var spotify           = require('../config/spotifyApiHelper');
 
@@ -17,10 +18,11 @@ router.get('/', welcomeController.index);
 
 // =============API Routes=============
 // ====================================
-router.get('/indexCircle', apiController.indexCircle);
-router.get('/indexCircle/:id', apiController.showCircle);
-router.get('/circleUsers/:id', isLoggedIn, apiController.displayCircleUsers);
-router.get('/indexUser', isLoggedIn, apiController.indexUser);
+router.get('/api/circles', isLoggedIn, circlesController.index);
+router.get('/api/circles/:id', isLoggedIn, circlesController.showCircle);
+router.get('/api/users', isLoggedIn, usersController.index);
+router.get('/api/me', usersController.currentUser);
+// router.get('/api/users/:id/circles', usersController.userCircles);
 
 // =============App Routes=============
 // ====================================
