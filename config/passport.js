@@ -26,20 +26,20 @@ module.exports = function(passport) {
       } else {
         debug("OAuth successful, user not found!");
 
-        var image;
-        function getImage() {
-          if (profile.images.length > 0) {
-            return image = profile.images[0].url;
-          } else {
-            return image = 'https://i.imgur.com/NRhYDQD.png'
-          }
-        }
+        // var image;
+        // function getImage() {
+        //   if (profile.images.length > 0) {
+        //     return image = profile.images[0].url;
+        //   } else {
+        //     return image = 'https://i.imgur.com/NRhYDQD.png'
+        //   }
+        // }
 
         var newUser = new User({
           displayName:  profile.displayName || profile.username,
           email:        profile.emails[0].value,
           spotifyId:    profile.id,
-          profileImage: getImage(),
+          profileImage: 'https://i.imgur.com/NRhYDQD.png',
           circles:      [],
           accessToken:  accessToken
         });
