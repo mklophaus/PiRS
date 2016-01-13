@@ -22,6 +22,7 @@ var index = function(req, res, next) {
   })
   }
   else {
+    // console.log(req);
     res.render('./index', { user: req.user });
   }
 }

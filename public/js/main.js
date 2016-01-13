@@ -96,6 +96,7 @@ $(document).ready(function() {
       friendId = $(friend).attr('id');
       friendsToAdd.push(friendId);
     });
+    $("#createCircleArea").slideToggle(300);
     $.ajax({
       url: '/circles',
       type: 'POST',
@@ -157,7 +158,7 @@ $(document).ready(function() {
       },
       error: function() {
         console.log('herb');
-        var errorMessage = "Yo.. your ish is ucked. please try again!";
+        var errorMessage = "WHOOPS. Make sure everyone in your circle has Spotify playlists, and please try again!";
         $("#modal").text(errorMessage).css("color", "black").fadeIn(300);
         targettedPlayButton.src = "https://i.imgur.com/ODkyHmb.png";
       }
@@ -200,13 +201,16 @@ $(document).ready(function() {
   }
 
   $('#circlesList').delegate('.deleteCircle', 'click', function(evt){
+    var circleParent = evt.target.parentElement.parentElement.parentElement;
     var id = $(this).attr('data-indexNumber');
+    $(circleParent).slideToggle();
     $('#' + id).remove();
     $.ajax({
       method: 'DELETE',
       url: '/circles/' + id
     }).done(function(data) {
       console.log(data);
+      location.reload();
     });
   });
 
