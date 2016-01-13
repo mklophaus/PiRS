@@ -139,7 +139,7 @@ $(document).ready(function() {
 
         $("#playlistDest").remove()
 
-        $('main').append('<div id="playlistDest"><iframe src="https://embed.spotify.com/?uri=spotify:trackset:'+ title +':' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe><button id="savePlaylist" data-title="' + title + '" data-trackids="' + data + '">save<br>playlist</button></div>');
+        $('main').append('<div id="playlistDest"><iframe src="https://embed.spotify.com/?uri=spotify:trackset:'+ title +':' + data + 'height="80px" frameborder="0" allowtransparency="true"></iframe><button id="savePlaylist" data-title="' + title + '" data-trackids="' + data + '">save<br>playlist</button></div>');
 
         // SAVE IFRAME TO LOCAL STORAGE!!!
 
@@ -286,9 +286,21 @@ $(document).ready(function() {
     $("#modal").html(HTML)
   };
 
+  $("#aboutPirs").on("click", function() {
+    showModal("<strong>Pi Radio (PiRS) = DJ Democracy</strong><br><p>Tired of [having to be] that ONE person in control the music? PiRS builds group playlists by mixing listening preferences from any circle of Spotify users.</p> <ul><strong>How to PiRS:</strong> <li> Create a circle, search for friends by their Spotify IDs</li><li>Select a circle and click its play button</li><li>...That's it! You can push any PiRS-generated playlist to your Spotify by clicking 'save playlist' next to the Spotify player </li> </ul> Everyone - shut up and listen :)")
+  })
+  $("#legal").on("click", function() {
+    showModal("<strong>PiRS is 100% legal.</strong><br>(ask your local attorney)")
+  })
+  $("#contact").on("click", function() {
+    showModal("<strong>Brought to you by Boom Squad!</strong><p><a target='_blank' href='https://github.com/benjaminben'>Ben</a>, <a target='_blank' href='https://github.com/gev326'>Gev</a>, <a target='_blank' href='https://github.com/emdubb'>Melissa</a>, <a target='_blank' href='https://github.com/mklophaus'>Mike</a>, <a target='_blank' href='https://github.com/JTGA'>Judd</a></p>")
+  })
+  $("#settings").on("click", function() {
+    showModal("coming soon!")
+  })
+
   $("#logo").on("click", function() {
     console.log("yee");
-    showModal();
   });
 
   $("#content").on("click", function() {
