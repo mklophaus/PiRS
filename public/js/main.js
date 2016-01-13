@@ -8,7 +8,6 @@ $(document).ready(function() {
       $headerDestination  = $('#welcome'),
       $promptDestination  = $('#circlePrompt'),
       $circleDestination  = $('#circlesList'),
-      friendsToAdd = [],
       filteredUsers = [],
       searchName    = '',
       userId,
@@ -47,7 +46,7 @@ $(document).ready(function() {
       console.log(textStatus);
       console.log(errorThrown);
       $('#friend').empty();
-      $('#friend').append('<p>No users match that ID</p>');
+      $('#friend').append('<div>no match</div>');
     },
       success: function(data){
         console.log(data);
@@ -58,12 +57,11 @@ $(document).ready(function() {
           profileImage = null;
         }
 
+        $('#friend').append('<div id="proImg"><img  style="height: 100%; width: 100%"></div');
         if (profileImage) {
-          $('#friend').append('<div id="proImg">');
-          $('#proImg').css('background-image', 'url(' + profileImage + ')');
+          $('#proImg > img').attr('src', profileImage);
         } else {
-          $('#friend').append('<div id="proImg">');
-          $('#proImg').css('background-image', 'url(https://i.imgur.com/NRhYDQD.png)');
+          $('#proImg > img').attr('src', 'https://i.imgur.com/NRhYDQD.png');
         }
 
 
@@ -81,7 +79,8 @@ $(document).ready(function() {
     console.log('click');
     // var friend = $('#friend div').html();
     $('#friendsToAdd').append('<div class="addedFriend" id="'+foundUser.id+'">'+foundUser.display_name+'</div>');
-    $('#friend').empty();
+    $('#friend').html('');
+    $('#search').val('');
   });
 
   $('#search').on('keyup blur', function(evt) {
@@ -91,11 +90,20 @@ $(document).ready(function() {
   });
 
   $('#createCircle').on('click', function(){
+
+    var friendsToAdd = [];
+
     var title = $('#titleField').val();
     $.each($('.addedFriend'), function(i, friend){
       friendId = $(friend).attr('id');
       friendsToAdd.push(friendId);
     });
+
+    $('#titleField').val('');
+    $('#search').val('');
+    $('#friend').html('');
+    $('#friendsToAdd').html('');
+
     $("#createCircleArea").slideToggle(300);
     $.ajax({
       url: '/circles',
@@ -107,15 +115,14 @@ $(document).ready(function() {
       success: function(data){
         // new CircleView(data);
         console.log(data);
-        // $('titleField').val().empty();
-        // $('#search').val().empty();
-        // $('#friend').empty();
-        // $('#friendsToAdd').empty();
+        friendsToAdd = [];
+
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.status);
         console.log(textStatus);
         console.log(errorThrown);
+        // friendsToAdd = [];
       }
     });
       // render();
