@@ -76,7 +76,7 @@
                   <% circle.users.forEach(function(user){ %>
                     <div class="circleMemberExpanded">
                       <img class="circleMemberImage" src="https://i.imgur.com/NRhYDQD.png">
-                      <div class="circleMemberName">Name<%= user.spotifyId %></div>
+                      <div class="circleMemberName"><%= user.spotifyId %></div>
                       <div class="circleMemberDelete"><img src="https://i.imgur.com/OwlzNxO.png"></div>
                     </div>
                   <% }) %>
@@ -116,8 +116,7 @@
       user = JSON.parse('<$- JSON.stringify(user) $>');
       console.log(user);
       name = '<$- user.displayName $>';
-      userCircles = JSON.parse('<$- JSON.stringify(user.circles) $>');
-      console.log(userCircles.length);
+      userCircles = JSON.parse('<$- JSON.stringify(userCircles) $>');
       userCircles.forEach(function(circle) {
         console.log(circle);
       });
