@@ -29,18 +29,17 @@ module.exports = function(passport) {
         // var image;
         // function getImage() {
         //   if (profile.images.length > 0) {
-        //     image = profile.images[0].url;
+        //     return image = profile.images[0].url;
         //   } else {
-        //     image = 'http://www.sessionlogs.com/media/icons/defaultIcon.png'
+        //     return image = 'https://i.imgur.com/NRhYDQD.png'
         //   }
         // }
-        // getImage();
 
         var newUser = new User({
           displayName:  profile.displayName || profile.username,
           email:        profile.emails[0].value,
           spotifyId:    profile.id,
-          profileImage: "https://i.imgur.com/NRhYDQD.png",
+          profileImage: 'https://i.imgur.com/NRhYDQD.png',
           circles:      [],
           accessToken:  accessToken
         });

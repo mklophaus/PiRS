@@ -7,6 +7,7 @@ var express     = require('express'),
 // Require controllers.
 var welcomeController = require('../controllers/welcome');
 var circlesController = require('../controllers/circles');
+var usersController   = require('../controllers/users');
 var apiController     = require('../controllers/api');
 var spotify           = require('../config/spotifyApiHelper');
 
@@ -17,10 +18,11 @@ router.get('/', welcomeController.index);
 
 // =============API Routes=============
 // ====================================
-router.get('/indexCircle', apiController.indexCircle);
-router.get('/indexCircle/:id', apiController.showCircle);
-router.get('/circleUsers/:id', isLoggedIn, apiController.displayCircleUsers);
-router.get('/indexUser', isLoggedIn, apiController.indexUser);
+router.get('/api/circles', isLoggedIn, circlesController.index);
+router.get('/api/circles/:id', isLoggedIn, circlesController.showCircle);
+router.get('/api/users', isLoggedIn, usersController.index);
+router.get('/api/me', usersController.currentUser);
+// router.get('/api/users/:id/circles', usersController.userCircles);
 
 // =============App Routes=============
 // ====================================
@@ -38,6 +40,20 @@ router.get('/testLib', isLoggedIn, function(req,res) {
         console.log()
         res.redirect('/')
       });
+});
+router.get('/postPlaylist', isLoggedIn, function(req,res) {
+  // eval(locus);
+  spotify.savePlaylist(req.user.spotifyId, req.user.accessToken, req.query.title, req.query.tracks).
+    then(function(playlist) {
+      console.log("squish");
+      res.json(playlist);
+      console.log(playlist);
+    }).
+    then(function() {
+      console.log('ay bae')
+      console.log()
+      res.redirect('/')
+    })
 });
 
 router.get('/libraries', isLoggedIn, function(req, res) {
@@ -92,14 +108,14 @@ var stateKey = 'spotify_auth_state';
 
 
 router.get('/auth/spotify',
-  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true }),
+  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private', 'playlist-modify-public', 'playlist-modify-private'], showDialog: true }),
   function(req, res){
    // The request will be redirected to spotify for authentication, so this
    // function will not be called.
 });
 
 router.get('/login',
-  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private']}),
+  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private', 'playlist-modify-public', 'playlist-modify-private']}),
   function(req, res){
    // The request will be redirected to spotify for authentication, so this
    // function will not be called.

@@ -8,7 +8,6 @@ $(document).ready(function() {
       $headerDestination  = $('#welcome'),
       $promptDestination  = $('#circlePrompt'),
       $circleDestination  = $('#circlesList'),
-      friendsToAdd = [],
       filteredUsers = [],
       searchName    = '',
       userId,
@@ -47,7 +46,7 @@ $(document).ready(function() {
       console.log(textStatus);
       console.log(errorThrown);
       $('#friend').empty();
-      $('#friend').append('<p>No users match that ID</p>');
+      $('#friend').append('<div>no match</div>');
     },
       success: function(data){
         console.log(data);
@@ -58,12 +57,11 @@ $(document).ready(function() {
           profileImage = null;
         }
 
+        $('#friend').append('<div id="proImg"><img  style="height: 100%; width: 100%"></div');
         if (profileImage) {
-          $('#friend').append('<div id="proImg">');
-          $('#proImg').css('background-image', 'url(' + profileImage + ')');
+          $('#proImg > img').attr('src', profileImage);
         } else {
-          $('#friend').append('<div id="proImg">');
-          $('#proImg').css('background-image', 'url(https://i.imgur.com/NRhYDQD.png)');
+          $('#proImg > img').attr('src', 'https://i.imgur.com/NRhYDQD.png');
         }
 
 
@@ -81,7 +79,8 @@ $(document).ready(function() {
     console.log('click');
     // var friend = $('#friend div').html();
     $('#friendsToAdd').append('<div class="addedFriend" id="'+foundUser.id+'">'+foundUser.display_name+'</div>');
-    $('#friend').empty();
+    $('#friend').html('');
+    $('#search').val('');
   });
 
   $('#search').on('keyup blur', function(evt) {
@@ -91,11 +90,21 @@ $(document).ready(function() {
   });
 
   $('#createCircle').on('click', function(){
+
+    var friendsToAdd = [];
+
     var title = $('#titleField').val();
     $.each($('.addedFriend'), function(i, friend){
       friendId = $(friend).attr('id');
       friendsToAdd.push(friendId);
     });
+
+    $('#titleField').val('');
+    $('#search').val('');
+    $('#friend').html('');
+    $('#friendsToAdd').html('');
+
+    $("#createCircleArea").slideToggle(300);
     $.ajax({
       url: '/circles',
       type: 'POST',
@@ -106,28 +115,27 @@ $(document).ready(function() {
       success: function(data){
         // new CircleView(data);
         console.log(data);
-        // $('titleField').val().empty();
-        // $('#search').val().empty();
-        // $('#friend').empty();
-        // $('#friendsToAdd').empty();
+        friendsToAdd = [];
+
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.status);
         console.log(textStatus);
         console.log(errorThrown);
+        // friendsToAdd = [];
       }
     });
-      render();
+      // render();
   });
 
 
   $('#circlesList').delegate('.stationLink', 'click', function(evt){
     evt.preventDefault();
-    console.log('click');
     targettedPlayButton = evt.target;
     targettedPlayButton.src = "http://emdubb.co/ring-alt.svg";
     var id = $(this).attr('data-indexNumber');
-    console.log(id);
+    var title = $(this).attr('data-title');
+    console.log(title);
     $.ajax({
       type: 'GET',
       url: '/testLib',
@@ -137,10 +145,15 @@ $(document).ready(function() {
       success: function(data) {
         console.log(data);
 
-        $("iframe").remove()
+        $("#playlistDest").remove()
 
-        $('main').append('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:' + data + '"height="80" frameborder="0" allowtransparency="true"></iframe>');
+        $('main').append('<div id="playlistDest"><iframe src="https://embed.spotify.com/?uri=spotify:trackset:'+ title +':' + data + 'height="80px" frameborder="0" allowtransparency="true"></iframe><button id="savePlaylist" data-title="' + title + '" data-trackids="' + data + '">save<br>playlist</button></div>');
+
+        // SAVE IFRAME TO LOCAL STORAGE!!!
+
         console.log(targettedPlayButton.src);
+        addClickToSave();
+
         function respondify() {
           $('iframe[src*="embed.spotify.com"]').each( function() {
             $(this).css('width',$(this).parent(3).css('width'));
@@ -152,21 +165,59 @@ $(document).ready(function() {
       },
       error: function() {
         console.log('herb');
-        var errorMessage = "Yo.. your ish is ucked. please try again!";
+        var errorMessage = "WHOOPS. Make sure everyone in your circle has Spotify playlists, and please try again!";
         $("#modal").text(errorMessage).css("color", "black").fadeIn(300);
         targettedPlayButton.src = "https://i.imgur.com/ODkyHmb.png";
       }
     });
   });
 
+  function addClickToSave() {
+    $("#savePlaylist").on('click', function(e){
+
+      var playlistName = $(this).attr('data-title');
+
+      var modalHtml = '<strong>Playlist "' + $(this).attr('data-title') + '" saved to Spotify!</strong><br>(you might need to restart Spotify)<br><a href="spotify:playlist:'+ playlistName +' id="openSpotifyButton">Open Spotify</a>';
+      showModal(modalHtml);
+
+      $.ajax({
+        type: 'GET',
+        url: '/postPlaylist',
+        data: {
+          title: playlistName,
+          tracks: parseTrackIDs($(this).attr('data-trackids'))
+        },
+        success: function(data) {
+          console.log('Playlist posted to Spotify');
+          $("#savePlaylist").prop("disabled", true);
+        },
+        error: function(err) {
+          console.log(err);
+      }
+    });
+  });
+  }
+
+  function parseTrackIDs(tracks) {
+    var trackSplits = tracks.split(",");
+    var trackCats = trackSplits.map(function(track) {
+      return("spotify:track:" + track)
+    });
+    console.log(trackCats)
+    return trackCats
+  }
+
   $('#circlesList').delegate('.deleteCircle', 'click', function(evt){
+    var circleParent = evt.target.parentElement.parentElement.parentElement;
     var id = $(this).attr('data-indexNumber');
+    $(circleParent).slideToggle();
     $('#' + id).remove();
     $.ajax({
       method: 'DELETE',
       url: '/circles/' + id
     }).done(function(data) {
       console.log(data);
+      location.reload();
     });
   });
 
@@ -223,8 +274,7 @@ $(document).ready(function() {
   });
 
   $('#whereAmI').on('click', function() {
-    console.log('clack')
-    $("#moreInfoMenu").slideToggle();
+    $("#moreInfoMenu").slideToggle(300);
     $("#moreInfoMenu").css("display", "flex");
     $("#whereAmI").fadeOut(150, function() {
       $("#gotIt").fadeIn(150);
@@ -241,13 +291,26 @@ $(document).ready(function() {
     });
   });
 
-  var showModal = function() {
+  var showModal = function(HTML) {
     $("#modal").fadeIn(300);
+    $("#modal").html(HTML)
   };
+
+  $("#aboutPirs").on("click", function() {
+    showModal("<strong>Pi Radio (PiRS) = DJ Democracy</strong><br><p>Tired of [having to be] that ONE person in control the music? PiRS builds group playlists by mixing listening preferences from any circle of Spotify users.</p> <ul><strong>How to PiRS:</strong> <li> Create a circle, search for friends by their Spotify IDs</li><li>Select a circle and click its play button</li><li>...That's it! You can push any PiRS-generated playlist to your Spotify by clicking 'save playlist' next to the Spotify player </li> </ul> Everyone - shut up and listen :)")
+  })
+  $("#legal").on("click", function() {
+    showModal("<strong>PiRS is 100% legal.</strong><br>(ask your local attorney)")
+  })
+  $("#contact").on("click", function() {
+    showModal("<strong>Brought to you by Boom Squad!</strong><p><a target='_blank' href='https://github.com/benjaminben'>Ben</a>, <a target='_blank' href='https://github.com/gev326'>Gev</a>, <a target='_blank' href='https://github.com/emdubb'>Melissa</a>, <a target='_blank' href='https://github.com/mklophaus'>Mike</a>, <a target='_blank' href='https://github.com/JTGA'>Judd</a></p>")
+  })
+  $("#settings").on("click", function() {
+    showModal("coming soon!")
+  })
 
   $("#logo").on("click", function() {
     console.log("yee");
-    showModal();
   });
 
   $("#content").on("click", function() {

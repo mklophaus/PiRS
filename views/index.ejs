@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8">
+
     <$- include('partials/head') $>
   </head>
   <body>
@@ -11,20 +13,20 @@
     <div id="topHeader" class="header">
       <div id="welcome">
         <script type="text/template" id="headerName-template">
-          <div id="userName"><p>user name<%= name %></p></div>
+          <p><%= user.spotifyId %></p>
         </script>
       </div>
       <div id="logoContainer"><img id="logo" src="https://i.imgur.com/E5WguAz.png"></div>
       <div id="moreInfo">
         <p id="whereAmI">where am I?</p>
         <p id="gotIt">got it.</p>
-        <span id="moreInfoMenu">
-          <span class="menuItem" id="aboutPirs"><p>PiRS</p></span>
-          <span class="menuItem" id="legal"><p>legal</p></span>
-          <span class="menuItem" id="contact"><p>contact</p></span>
-          <span class="menuItem" id="settings"><p>settings</p></span>
-          <span class="menuItem" id="logout"><p><a href="/logout">logout</a></p></span>
-        </span>
+        <div id="moreInfoMenu">
+          <div class="menuItem" id="aboutPirs"><p>PiRS</p></div>
+          <div class="menuItem" id="legal"><p>legal</p></div>
+          <div class="menuItem" id="contact"><p>contact</p></div>
+          <div class="menuItem" id="settings"><p>settings</p></div>
+          <div class="menuItem" id="logout"><p><a href="/logout">logout</a></p></div>
+        </div>
       </div>
       <section id="modal">
 
@@ -44,7 +46,7 @@
         <div id="createCircleArea">
           <div id="createCircleForm">
             <input id="titleField" class="input-field" placeholder='Group Name (e.g. Boom Squad)'>
-            <input id="search" type="search" placeholder="Search for Friends (e.g. pieluvr3141)">
+            <input id="search" type="search" autocapitalize="off" placeholder="Search for Friends (e.g. pieluvr3141)">
             <div id="buttonsAndFriends">
               <button id="addFriend">add friend</button>
               <div id="friend"></div>
@@ -62,19 +64,19 @@
                 <div class="circleHeader">
                   <div class="circleTitle"><p><%= circle.title %><p></div>
                 </div>
-                <div data-indexNumber="<%= circle._id %>" class="playButton stationLink"><img src="https://i.imgur.com/ODkyHmb.png"></div>
+                <div data-indexNumber="<%= circle._id %>" data-title="<%= circle.title %>" class="playButton stationLink"><img src="https://i.imgur.com/ODkyHmb.png"></div>
                 <div class="circleMembers">
                   <% circle.users.forEach(function(user){ %>
                     <div class="circleMember">
-                      <div class="circleMemberImage"><img src="https://i.imgur.com/NRhYDQD.png"></div>
+                      <img class="circleMemberImage" src="https://i.imgur.com/NRhYDQD.png">
                     </div>
                   <% }) %>
                 </div>
                 <div class="circleMembersExpanded">
                   <% circle.users.forEach(function(user){ %>
                     <div class="circleMemberExpanded">
-                      <div class="circleMemberImage"><img src="https://i.imgur.com/NRhYDQD.png"></div>
-                      <div class="circleMemberName">Name<%= user.spotifyId %></div>
+                      <img class="circleMemberImage" src="https://i.imgur.com/NRhYDQD.png">
+                      <div class="circleMemberName"><%= user.spotifyId %></div>
                       <div class="circleMemberDelete"><img src="https://i.imgur.com/OwlzNxO.png"></div>
                     </div>
                   <% }) %>
@@ -104,14 +106,22 @@
 
   <script>
     var name        = '';
+    var user;
+    var displayName;
     var userCircles = [];
     var circleId;
+    var Circle;
 
     <$ if (user) { $>
+      user = JSON.parse('<$- JSON.stringify(user) $>');
+      console.log(user);
       name = '<$- user.displayName $>';
-      userCircles = JSON.parse('<$- JSON.stringify(user.circles) $>');
-      console.log(userCircles.length);
+      userCircles = JSON.parse('<$- JSON.stringify(userCircles) $>');
+      userCircles.forEach(function(circle) {
+        console.log(circle);
+      });
     <$ } $>
+
   </script>
 
 

@@ -5,6 +5,22 @@ var spotify = require('../config/spotifyApiHelper');
 var locus   = require('locus');
 var async   = require('async');
 
+var index = function(req, res) {
+  Circle.find({}, function(err, records) {
+    res.json(records);
+  });
+};
+
+var showCircle = function(req, res){
+  var id = req.params.id;
+  Circle.findById(id, function(err, circle){
+    console.log("GOT TO THIS");
+    if (err) {
+      res.send(err);
+    }
+    res.json(circle);
+  });
+};
 
 var createCircle = function(req, res, done) {
   var circleUsersString = JSON.parse(req.body.users);
@@ -138,6 +154,8 @@ var destroyCircle = function(req, res) {
 };
 
 module.exports = {
+  index: index,
+  showCircle: showCircle,
   createCircle: createCircle,
   updateCircle: updateCircle,
   destroyCircle: destroyCircle
